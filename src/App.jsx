@@ -5,25 +5,38 @@ import "./App.css";
 
 function App() {
   const [session, setSession] = useState(null);
-  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [promisar, setPromisar] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function checkSession() {
+    async function startApp() {
       const {
         data: { session }
       } = await supabase.auth.getSession();
 
       setSession(session);
-      setCheckingAuth(false);
+
+      if (session) {
+        await loadPromisar();
+      }
+
+      setLoading(false);
     }
 
-    checkSession();
+    startApp();
 
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+      async (_event, session) => {
         setSession(session);
+
+        if (session) {
+          await loadPromisar();
+        } else {
+          setPromisar([]);
+        }
       }
     );
 
@@ -32,31 +45,50 @@ function App() {
     };
   }, []);
 
-  if (checkingAuth) {
-    return <p>Laddar...</p>;
+  async function loadPromisar() {
+    setError("");
+
+    const { data, error } = await supabase.rpc(
+      "get_daily_promis"
+    );
+
+    if (error) {
+      console.error(error);
+      setError(error.message);
+      return;
+    }
+
+    setPromisar(data || []);
+  }
+
+  if (loading) {
+    return <p className="status">Laddar PROMI...</p>;
   }
 
   if (!session) {
-    return (
-      <Auth
-        onLogin={() => {}}
-      />
-    );
+    return <Auth onLogin={() => {}} />;
   }
 
   return (
     <main className="app">
       <h1 className="logo">PROMI</h1>
 
-      <p>Du är inloggad! 🎉</p>
+      {error && (
+        <p className="status">
+          Fel: {error}
+        </p>
+      )}
 
-      <button
-        onClick={() =>
-          supabase.auth.signOut()
-        }
-      >
-        Logga ut
-      </button>
+      <div className="promi-grid">
+        {promisar.map((promi) => (
+          <button
+            key={promi.id}
+            className="promi-card"
+          >
+            <span className="lock">🔒</span>
+          </button>
+        ))}
+      </div>
     </main>
   );
 }

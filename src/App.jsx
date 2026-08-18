@@ -6,6 +6,7 @@ import "./App.css";
 function App() {
   const [session, setSession] = useState(null);
   const [promisar, setPromisar] = useState([]);
+  const [selectedPromi, setSelectedPromi] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -36,6 +37,7 @@ function App() {
           await loadPromisar();
         } else {
           setPromisar([]);
+          setSelectedPromi(null);
         }
       }
     );
@@ -69,6 +71,58 @@ function App() {
     return <Auth onLogin={() => {}} />;
   }
 
+  // DETAIL VIEW
+  if (selectedPromi) {
+    const points =
+      selectedPromi["Svårighetsgrad"] * 10;
+
+    return (
+      <main className="app">
+        <button
+          className="back-button"
+          onClick={() => setSelectedPromi(null)}
+        >
+          ← Tillbaka
+        </button>
+
+        <section className="detail-card">
+          <div className="detail-emoji">
+            {selectedPromi.Emoji}
+          </div>
+
+          <h1>{selectedPromi.Namn}</h1>
+
+          <p className="detail-hitta">
+            {selectedPromi.Hitta}
+          </p>
+
+          <div className="detail-info">
+            <span>
+              Svårighetsgrad{" "}
+              {selectedPromi["Svårighetsgrad"]}/3
+            </span>
+
+            <strong>
+              +{points} poäng
+            </strong>
+          </div>
+
+          {selectedPromi.Bonus && (
+            <div className="bonus-preview">
+              <strong>Bonus</strong>
+              <p>{selectedPromi.Bonus}</p>
+            </div>
+          )}
+
+          <button className="start-button">
+            GÖR PROMIN
+          </button>
+        </section>
+      </main>
+    );
+  }
+
+  // HOME
   return (
     <main className="app">
       <h1 className="logo">PROMI</h1>
@@ -84,6 +138,9 @@ function App() {
           <button
             key={promi.id}
             className="promi-card"
+            onClick={() =>
+              setSelectedPromi(promi)
+            }
           >
             <span className="lock">🔒</span>
           </button>

@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     async function getPromi() {
       const { data, error } = await supabase
-        .from("promisar")
+        .from("PROMISAR")
         .select("*")
         .limit(1)
         .single();
@@ -40,9 +40,15 @@ function App() {
 
       {promi && (
         <section>
-          <h2>{promi.title}</h2>
-          <p>{promi.description}</p>
-          <p>{promi.points} poäng</p>
+          <div>{promi.emoji}</div>
+
+          <h2>{promi.namn}</h2>
+
+          <p>{promi.hitta}</p>
+
+          <p>Svårhetsgrad: {promi.svårhetsgrad}</p>
+
+          <p>Bonus: {promi.bonus}</p>
         </section>
       )}
     </main>

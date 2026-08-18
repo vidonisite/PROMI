@@ -289,9 +289,14 @@ function App() {
     <main className="app">
       <h1 className="logo">PROMI</h1>
 
-      {profile && (
-        <div>{profile.poäng}</div>
-      )}
+      <div className="points-display">
+        <span className="points-icon">★</span>
+      
+        <div className="points-content">
+          <span className="points-label">POÄNG</span>
+          <strong>{profile?.poäng ?? 0}</strong>
+        </div>
+      </div>
 
       {error && (
         <p className="status">

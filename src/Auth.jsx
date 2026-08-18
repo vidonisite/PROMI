@@ -3,9 +3,11 @@ import { supabase } from "./lib/supabase";
 
 function Auth({ onLogin }) {
   const [mode, setMode] = useState("login");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -17,11 +19,16 @@ function Auth({ onLogin }) {
 
     if (mode === "signup") {
       const {
-        data: authData,
+        data,
         error: signupError
       } = await supabase.auth.signUp({
         email,
-        password
+        password,
+        options: {
+          data: {
+            username
+          }
+        }
       });
 
       if (signupError) {
@@ -30,30 +37,23 @@ function Auth({ onLogin }) {
         return;
       }
 
-      if (authData.user) {
-        const { error: profileError } = await supabase
-          .from("profiles")
-          .insert({
-            id: authData.user.id,
-            username,
-            poäng: 0,
-            streak: 0
-          });
+      // Profile skapas automatiskt av Supabase-triggern
+      // när användaren skapas.
 
-        if (profileError) {
-          setError(profileError.message);
-          setLoading(false);
-          return;
-        }
+      if (data.session) {
+        onLogin();
+      } else {
+        setError(
+          "Kontot skapades! Kontrollera din e-post för att bekräfta kontot."
+        );
       }
-
-      onLogin();
     } else {
-      const { error: loginError } =
-        await supabase.auth.signInWithPassword({
-          email,
-          password
-        });
+      const {
+        error: loginError
+      } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
 
       if (loginError) {
         setError(loginError.message);
@@ -120,13 +120,16 @@ function Auth({ onLogin }) {
       </form>
 
       <button
-        onClick={() =>
+        type="button"
+        onClick={() => {
+          setError("");
+
           setMode(
             mode === "login"
               ? "signup"
               : "login"
-          )
-        }
+          );
+        }}
       >
         {mode === "login"
           ? "Har du inget konto? Skapa konto"

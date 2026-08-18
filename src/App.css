@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  margin: 0 0 30px;
+  font-size: 40px;
+  font-weight: 800;
+}
+
+.promi-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px;
+  background: white;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.promi-emoji {
+  font-size: 80px;
+  margin-bottom: 15px;
+}
+
+.promi-card h2 {
+  margin: 0 0 15px;
+  font-size: 28px;
+}
+
+.hitta {
+  margin: 0 0 25px;
+  font-size: 19px;
+}
+
+.difficulty {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid #eee;
+}
+
+.points {
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.status {
+  padding: 40px;
+  text-align: center;
+}

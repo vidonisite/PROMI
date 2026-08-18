@@ -289,16 +289,26 @@ function App() {
     <main className="app">
       <h1 className="logo">PROMI</h1>
 
-      <div className="points-display">
-        <div className="points-content">
-          <span className="points-label">POÄNG</span>
-          <strong>{profile?.poäng ?? 0}</strong>
+      <div className="stats-display">
+
+        <div className="stat-card">
+          <span className="stat-icon">★</span>
+      
+          <div className="stat-content">
+            <span className="stat-label">POÄNG</span>
+            <strong>{profile?.poäng ?? 0}</strong>
+          </div>
         </div>
       
-        <div className="points-content">
-          <span className="points-label">STREAK</span>
-          <strong>{profile?.streak ?? 0} 🔥</strong>
+        <div className="stat-card">
+          <span className="stat-icon">🔥</span>
+      
+          <div className="stat-content">
+            <span className="stat-label">STREAK</span>
+            <strong>{profile?.streak ?? 0}</strong>
+          </div>
         </div>
+      
       </div>
 
       {error && (

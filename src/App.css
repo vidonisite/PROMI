@@ -9,59 +9,111 @@ body {
   color: #222;
 }
 
+button {
+  font: inherit;
+}
+
 .app {
   min-height: 100vh;
-  padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 30px 20px;
 }
 
 .logo {
   margin: 0 0 30px;
+  text-align: center;
   font-size: 40px;
   font-weight: 800;
 }
 
-.promi-card {
+.promi-grid {
   width: 100%;
-  max-width: 420px;
-  padding: 30px;
-  background: white;
+  max-width: 700px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.promi-card {
+  aspect-ratio: 1;
+  border: none;
   border-radius: 24px;
-  text-align: center;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-}
-
-.promi-emoji {
-  font-size: 80px;
-  margin-bottom: 15px;
-}
-
-.promi-card h2 {
-  margin: 0 0 15px;
-  font-size: 28px;
-}
-
-.hitta {
-  margin: 0 0 25px;
-  font-size: 19px;
-}
-
-.difficulty {
+  background: #6B9071;
   display: flex;
-  justify-content: space-between;
-  padding: 12px 0;
-  border-top: 1px solid #eee;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
 }
 
-.points {
-  margin-top: 20px;
-  font-size: 22px;
-  font-weight: 700;
+.promi-card:active {
+  transform: scale(0.96);
+}
+
+.lock {
+  font-size: 42px;
 }
 
 .status {
   padding: 40px;
   text-align: center;
+}
+
+/* Detail view */
+
+.back-button {
+  border: none;
+  background: none;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.detail-card {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 35px 25px;
+  background: white;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.detail-emoji {
+  font-size: 90px;
+  margin-bottom: 20px;
+}
+
+.detail-card h1 {
+  margin: 0 0 15px;
+  font-size: 32px;
+}
+
+.detail-hitta {
+  font-size: 20px;
+  margin: 0 0 30px;
+}
+
+.detail-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.start-button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  background: #6B9071;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 18px;
 }

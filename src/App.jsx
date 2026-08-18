@@ -288,7 +288,7 @@ function App() {
               });
             
               setSelectedPromi(promi);
-            }
+            }}
           >
             <span className="lock">
               {unlockedPromis.includes(promi.id)

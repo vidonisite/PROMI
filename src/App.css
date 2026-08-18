@@ -117,3 +117,72 @@ button {
   cursor: pointer;
   font-size: 18px;
 }
+
+
+.back-button {
+  border: none;
+  background: none;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.detail-card {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 35px 25px;
+  background: white;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.detail-emoji {
+  font-size: 90px;
+  margin-bottom: 20px;
+}
+
+.detail-card h1 {
+  margin: 0 0 15px;
+  font-size: 32px;
+}
+
+.detail-hitta {
+  font-size: 20px;
+  margin: 0 0 30px;
+}
+
+.detail-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.bonus-preview {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 16px;
+  background: #f1f5f2;
+}
+
+.bonus-preview p {
+  margin-bottom: 0;
+}
+
+.start-button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  background: #6B9071;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 18px;
+}

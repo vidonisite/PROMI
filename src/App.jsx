@@ -267,6 +267,8 @@ function App() {
     <main className="app">
       <h1 className="logo">PROMI</h1>
 
+      <div>{profile.Poäng}</div>
+
       {error && (
         <p className="status">
           Fel: {error}

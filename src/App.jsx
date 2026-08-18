@@ -290,11 +290,14 @@ function App() {
       <h1 className="logo">PROMI</h1>
 
       <div className="points-display">
-        <span className="points-icon">★</span>
-      
         <div className="points-content">
           <span className="points-label">POÄNG</span>
           <strong>{profile?.poäng ?? 0}</strong>
+        </div>
+      
+        <div className="points-content">
+          <span className="points-label">STREAK</span>
+          <strong>{profile?.streak ?? 0} 🔥</strong>
         </div>
       </div>
 

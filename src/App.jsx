@@ -82,6 +82,38 @@ function App() {
     setCameraOpen(false);
   }
 
+
+  async function completePromi() {
+  if (!selectedPromi) {
+    return;
+  }
+
+  setError("");
+
+  const { error } = await supabase.rpc(
+    "complete_promi",
+    {
+      p_promi_id: selectedPromi.id
+    }
+  );
+
+  if (error) {
+    console.error(error);
+    setError(error.message);
+    return;
+  }
+
+  // Hämta dagens PROMISAR igen.
+  // Den genomförda är nu borttagen och
+  // nästa PROMI kan fyllas på senare.
+  await loadPromisar();
+
+  setTakenPhoto(null);
+  setSelectedPromi(null);
+}
+
+  
+
   function backToHome() {
     setSelectedPromi(null);
     setTakenPhoto(null);
@@ -155,8 +187,7 @@ function App() {
 
           <button
             className="start-button"
-            onClick={() => {
-              console.log("Bild redo:", takenPhoto);
+            onClick={completePromi}
             }}
           >
             FORTSÄTT

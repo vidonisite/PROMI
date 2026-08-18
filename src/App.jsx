@@ -14,8 +14,6 @@ function App() {
         .limit(1)
         .single();
 
-      console.log("PROMI från Supabase:", data);
-
       if (error) {
         setError(error.message);
       } else {
@@ -38,11 +36,17 @@ function App() {
 
   return (
     <main>
-      <h1>PROMI</h1>
+      <div>
+        <span>{promi.Emoji}</span>
+      </div>
 
-      <pre>
-        {JSON.stringify(promi, null, 2)}
-      </pre>
+      <h1>{promi.Namn}</h1>
+
+      <p>{promi.Hitta}</p>
+
+      <p>Svårighetsgrad: {promi["Svårighetsgrad"]}</p>
+
+      <p>Bonus: {promi.Bonus}</p>
     </main>
   );
 }

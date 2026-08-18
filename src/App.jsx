@@ -3,64 +3,92 @@ import { supabase } from "./lib/supabase";
 import "./App.css";
 
 function App() {
-  const [promi, setPromi] = useState(null);
+  const [promisar, setPromisar] = useState([]);
+  const [selectedPromi, setSelectedPromi] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function getPromi() {
+    async function getPromisar() {
       const { data, error } = await supabase
         .from("PROMISAR")
         .select("*")
-        .limit(1)
-        .single();
+        .limit(6);
 
       if (error) {
         setError(error.message);
       } else {
-        setPromi(data);
+        setPromisar(data);
       }
 
       setLoading(false);
     }
 
-    getPromi();
+    getPromisar();
   }, []);
 
   if (loading) {
-    return <p className="status">Laddar PROMI...</p>;
+    return <p className="status">Laddar PROMISAR...</p>;
   }
 
   if (error) {
     return <p className="status">Fel: {error}</p>;
   }
 
-  const points = promi["Svårighetsgrad"] * 10;
+  if (selectedPromi) {
+    const points = selectedPromi["Svårighetsgrad"] * 10;
+
+    return (
+      <main className="app">
+        <button
+          className="back-button"
+          onClick={() => setSelectedPromi(null)}
+        >
+          ← Tillbaka
+        </button>
+
+        <section className="detail-card">
+          <div className="detail-emoji">
+            {selectedPromi.Emoji}
+          </div>
+
+          <h1>{selectedPromi.Namn}</h1>
+
+          <p className="detail-hitta">
+            {selectedPromi.Hitta}
+          </p>
+
+          <div className="detail-info">
+            <span>
+              Svårighetsgrad {selectedPromi["Svårighetsgrad"]}/3
+            </span>
+
+            <strong>+{points} poäng</strong>
+          </div>
+
+          <button className="start-button">
+            Gör PROMIN
+          </button>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="app">
       <h1 className="logo">PROMI</h1>
 
-      <section className="promi-card">
-        <div className="promi-emoji">
-          {promi.Emoji}
-        </div>
-
-        <h2>{promi.Namn}</h2>
-
-        <p className="hitta">
-          {promi.Hitta}
-        </p>
-
-        <div className="difficulty">
-          <span>Svårighetsgrad</span>
-          <strong>{promi["Svårighetsgrad"]}/3</strong>
-        </div>
-
-        <div className="points">
-          +{points} poäng
-        </div>
-      </section>
+      <div className="promi-grid">
+        {promisar.map((promi) => (
+          <button
+            key={promi.id}
+            className="promi-card"
+            onClick={() => setSelectedPromi(promi)}
+          >
+            <span className="lock">🔒</span>
+          </button>
+        ))}
+      </div>
     </main>
   );
 }

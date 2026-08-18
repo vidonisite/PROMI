@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabase";
+import "./App.css";
 
 function App() {
   const [promi, setPromi] = useState(null);
@@ -27,26 +28,39 @@ function App() {
   }, []);
 
   if (loading) {
-    return <p>Laddar PROMI...</p>;
+    return <p className="status">Laddar PROMI...</p>;
   }
 
   if (error) {
-    return <p>Fel: {error}</p>;
+    return <p className="status">Fel: {error}</p>;
   }
 
+  const points = promi["Svårighetsgrad"] * 10;
+
   return (
-    <main>
-      <div>
-        <span>{promi.Emoji}</span>
-      </div>
+    <main className="app">
+      <h1 className="logo">PROMI</h1>
 
-      <h1>{promi.Namn}</h1>
+      <section className="promi-card">
+        <div className="promi-emoji">
+          {promi.Emoji}
+        </div>
 
-      <p>{promi.Hitta}</p>
+        <h2>{promi.Namn}</h2>
 
-      <p>Svårighetsgrad: {promi["Svårighetsgrad"]}</p>
+        <p className="hitta">
+          {promi.Hitta}
+        </p>
 
-      <p>Bonus: {promi.Bonus}</p>
+        <div className="difficulty">
+          <span>Svårighetsgrad</span>
+          <strong>{promi["Svårighetsgrad"]}/3</strong>
+        </div>
+
+        <div className="points">
+          +{points} poäng
+        </div>
+      </section>
     </main>
   );
 }

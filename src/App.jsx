@@ -188,7 +188,6 @@ function App() {
           <button
             className="start-button"
             onClick={completePromi}
-            }}
           >
             FORTSÄTT
           </button>

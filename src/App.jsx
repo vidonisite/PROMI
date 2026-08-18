@@ -1,76 +1,46 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabase";
+import Auth from "./Auth";
 import "./App.css";
 
 function App() {
-  const [promisar, setPromisar] = useState([]);
-  const [selectedPromi, setSelectedPromi] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [session, setSession] = useState(null);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    async function getPromisar() {
-      const { data, error } = await supabase
-        .from("PROMISAR")
-        .select("*")
-        .limit(6);
+    async function checkSession() {
+      const {
+        data: { session }
+      } = await supabase.auth.getSession();
 
-      if (error) {
-        setError(error.message);
-      } else {
-        setPromisar(data);
-      }
-
-      setLoading(false);
+      setSession(session);
+      setCheckingAuth(false);
     }
 
-    getPromisar();
+    checkSession();
+
+    const {
+      data: { subscription }
+    } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
-  if (loading) {
-    return <p className="status">Laddar PROMISAR...</p>;
+  if (checkingAuth) {
+    return <p>Laddar...</p>;
   }
 
-  if (error) {
-    return <p className="status">Fel: {error}</p>;
-  }
-
-  if (selectedPromi) {
-    const points = selectedPromi["Svårighetsgrad"] * 10;
-
+  if (!session) {
     return (
-      <main className="app">
-        <button
-          className="back-button"
-          onClick={() => setSelectedPromi(null)}
-        >
-          ← Tillbaka
-        </button>
-
-        <section className="detail-card">
-          <div className="detail-emoji">
-            {selectedPromi.Emoji}
-          </div>
-
-          <h1>{selectedPromi.Namn}</h1>
-
-          <p className="detail-hitta">
-            {selectedPromi.Hitta}
-          </p>
-
-          <div className="detail-info">
-            <span>
-              Svårighetsgrad {selectedPromi["Svårighetsgrad"]}/3
-            </span>
-
-            <strong>+{points} poäng</strong>
-          </div>
-
-          <button className="start-button">
-            Gör PROMIN
-          </button>
-        </section>
-      </main>
+      <Auth
+        onLogin={() => {}}
+      />
     );
   }
 
@@ -78,17 +48,15 @@ function App() {
     <main className="app">
       <h1 className="logo">PROMI</h1>
 
-      <div className="promi-grid">
-        {promisar.map((promi) => (
-          <button
-            key={promi.id}
-            className="promi-card"
-            onClick={() => setSelectedPromi(promi)}
-          >
-            <span className="lock">🔒</span>
-          </button>
-        ))}
-      </div>
+      <p>Du är inloggad! 🎉</p>
+
+      <button
+        onClick={() =>
+          supabase.auth.signOut()
+        }
+      >
+        Logga ut
+      </button>
     </main>
   );
 }

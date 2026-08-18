@@ -14,6 +14,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [unlockedPromis, setUnlockedPromis] = useState([]);
+
   useEffect(() => {
     async function startApp() {
       const {
@@ -276,12 +278,22 @@ function App() {
           <button
             key={promi.id}
             className="promi-card"
-            onClick={() =>
-              setSelectedPromi(promi)
+            onClick={() => {
+              setUnlockedPromis((current) => {
+                if (current.includes(promi.id)) {
+                  return current;
+                }
+            
+                return [...current, promi.id];
+              });
+            
+              setSelectedPromi(promi);
             }
           >
             <span className="lock">
-              🔒
+              {unlockedPromis.includes(promi.id)
+                ? promi.Emoji
+                : "🔒"}
             </span>
           </button>
         ))}

@@ -15,6 +15,7 @@ function App() {
   const [error, setError] = useState("");
 
   const [unlockedPromis, setUnlockedPromis] = useState([]);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     async function startApp() {
@@ -26,6 +27,7 @@ function App() {
 
       if (session) {
         await loadPromisar();
+        await loadProfile(session.user.id);
       }
 
       setLoading(false);
@@ -41,11 +43,13 @@ function App() {
 
         if (session) {
           await loadPromisar();
+          await loadProfile(session.user.id);
         } else {
           setPromisar([]);
           setSelectedPromi(null);
           setTakenPhoto(null);
           setCameraOpen(false);
+          setProfile(null);
         }
       }
     );
@@ -70,6 +74,24 @@ function App() {
 
     setPromisar(data || []);
   }
+
+  async function loadProfile(userId) {
+  const {
+    data,
+    error
+  } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", userId)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  setProfile(data);
+}
 
   function openCamera() {
     setCameraOpen(true);
@@ -267,7 +289,9 @@ function App() {
     <main className="app">
       <h1 className="logo">PROMI</h1>
 
-      <div>{profile.Poäng}</div>
+      {profile && (
+        <div>{profile.poäng}</div>
+      )}
 
       {error && (
         <p className="status">

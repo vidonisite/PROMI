@@ -23,6 +23,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [activeTab, setActiveTab] = useState("bo");
+
   /*
    * STARTA APPEN
    */
@@ -288,58 +290,87 @@ function App() {
 
     return (
       <main className="app">
-
-        <button
-          className="back-button"
-          onClick={backToHome}
-        >
-          ← Tillbaka
-        </button>
-
-        <section className="detail-card">
-
-          <img
-            className="taken-photo"
-            src={takenPhoto}
-            alt="Din PROMI-bild"
-          />
-
-          <h1>
-            {selectedPromi.Namn}
-          </h1>
-
-          <p className="detail-hitta">
-            {selectedPromi.Hitta}
-          </p>
-
-          <div className="detail-info">
-
-            <span>
-              Svårighetsgrad{" "}
-              {selectedPromi["Svårighetsgrad"]}/3
-            </span>
-
-            <strong>
-              +{points} poäng
-            </strong>
-
+    
+        {activeTab === "bo" && (
+          <>
+            {/* DIN VANLIGA STARTSIDA HÄR */}
+          </>
+        )}
+    
+        {activeTab === "leaderboard" && (
+          <div className="placeholder-page">
+            <h1>Leaderboard</h1>
           </div>
-
-          {error && (
-            <p className="status">
-              Fel: {error}
-            </p>
-          )}
-
+        )}
+    
+        {activeTab === "feed" && (
+          <div className="placeholder-page">
+            <h1>Flödet</h1>
+          </div>
+        )}
+    
+        {activeTab === "create" && (
+          <div className="placeholder-page">
+            <h1>Skapa</h1>
+          </div>
+        )}
+    
+        <nav className="bottom-nav">
+    
           <button
-            className="start-button"
-            onClick={completePromi}
+            className={
+              activeTab === "bo"
+                ? "nav-item active"
+                : "nav-item"
+            }
+            onClick={() => setActiveTab("bo")}
           >
-            FORTSÄTT
+            <span>🏠</span>
+            <small>Bo</small>
           </button>
-
-        </section>
-
+    
+          <button
+            className={
+              activeTab === "leaderboard"
+                ? "nav-item active"
+                : "nav-item"
+            }
+            onClick={() =>
+              setActiveTab("leaderboard")
+            }
+          >
+            <span>🏆</span>
+            <small>Leaderboard</small>
+          </button>
+    
+          <button
+            className={
+              activeTab === "feed"
+                ? "nav-item active"
+                : "nav-item"
+            }
+            onClick={() => setActiveTab("feed")}
+          >
+            <span>✨</span>
+            <small>Flödet</small>
+          </button>
+    
+          <button
+            className={
+              activeTab === "create"
+                ? "nav-item active"
+                : "nav-item"
+            }
+            onClick={() =>
+              setActiveTab("create")
+            }
+          >
+            <span>＋</span>
+            <small>Skapa</small>
+          </button>
+    
+        </nav>
+    
       </main>
     );
   }

@@ -316,9 +316,32 @@ button {
 /* LÅSET */
 
 .unlock-lock {
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  transform-origin: center;
+  will-change: transform, opacity;
+
   animation: unlockLock 0.85s
     cubic-bezier(0.22, 1, 0.36, 1)
     forwards;
+}
+
+.unlock-lock svg {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  transform: translateZ(0);
 }
 
 
@@ -369,12 +392,12 @@ button {
 
   72% {
     opacity: 1;
-    transform: scale(1.8);
+    transform: scale(2);
   }
 
   100% {
     opacity: 0;
-    transform: scale(2.05);
+    transform: scale(3);
   }
 }
 

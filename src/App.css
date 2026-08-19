@@ -262,3 +262,122 @@ button {
   line-height: 1;
   font-weight: 800;
 }
+
+
+.unlock-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(36, 77, 60, 0.96);
+
+  animation: unlockScreen 1.6s ease forwards;
+}
+
+.unlock-icon {
+  position: relative;
+
+  width: 180px;
+  height: 180px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 130px;
+}
+
+.unlock-lock {
+  position: absolute;
+
+  animation: lockUnlock 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.unlock-emoji {
+  position: absolute;
+
+  opacity: 0;
+  transform: scale(0.2) rotate(-20deg);
+
+  animation: emojiAppear 0.55s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    0.95s forwards;
+}
+
+
+/* Bakgrunden zoomar lite */
+
+@keyframes unlockScreen {
+  0% {
+    background: rgba(36, 77, 60, 0);
+  }
+
+  20% {
+    background: rgba(36, 77, 60, 0.92);
+  }
+
+  75% {
+    background: rgba(36, 77, 60, 0.96);
+  }
+
+  100% {
+    background: rgba(36, 77, 60, 0);
+    pointer-events: none;
+  }
+}
+
+
+/* Låset blir stort */
+
+@keyframes lockUnlock {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  20% {
+    transform: scale(1.15);
+  }
+
+  55% {
+    transform: scale(2.8);
+  }
+
+  75% {
+    transform: scale(3.8);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(4.5);
+    opacity: 0;
+  }
+}
+
+
+/* Emojin poppar fram */
+
+@keyframes emojiAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-20deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.25) rotate(8deg);
+  }
+
+  75% {
+    transform: scale(0.9) rotate(-3deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}

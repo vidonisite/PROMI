@@ -6,16 +6,24 @@ import "./App.css";
 
 function App() {
   const [session, setSession] = useState(null);
+
   const [promisar, setPromisar] = useState([]);
+  const [profile, setProfile] = useState(null);
+
   const [selectedPromi, setSelectedPromi] = useState(null);
+  const [unlockingPromi, setUnlockingPromi] = useState(null);
+
+  const [unlockedPromis, setUnlockedPromis] = useState([]);
+
   const [takenPhoto, setTakenPhoto] = useState(null);
   const [cameraOpen, setCameraOpen] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const [unlockedPromis, setUnlockedPromis] = useState([]);
-  const [profile, setProfile] = useState(null);
+  /*
+   * STARTA APPEN
+   */
 
   useEffect(() => {
     async function startApp() {
@@ -46,10 +54,12 @@ function App() {
           await loadProfile(session.user.id);
         } else {
           setPromisar([]);
+          setProfile(null);
           setSelectedPromi(null);
           setTakenPhoto(null);
           setCameraOpen(false);
-          setProfile(null);
+          setUnlockingPromi(null);
+          setUnlockedPromis([]);
         }
       }
     );
@@ -59,12 +69,17 @@ function App() {
     };
   }, []);
 
+  /*
+   * HÄMTA DAGENS PROMISAR
+   */
+
   async function loadPromisar() {
     setError("");
 
-    const { data, error } = await supabase.rpc(
-      "get_daily_promis"
-    );
+    const {
+      data,
+      error
+    } = await supabase.rpc("get_daily_promis");
 
     if (error) {
       console.error(error);
@@ -75,73 +90,151 @@ function App() {
     setPromisar(data || []);
   }
 
-  async function loadProfile(userId) {
-  const {
-    data,
-    error
-  } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", userId)
-    .single();
+  /*
+   * HÄMTA PROFIL
+   */
 
-  if (error) {
-    console.error(error);
-    return;
+  async function loadProfile(userId) {
+    const {
+      data,
+      error
+    } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setProfile(data);
   }
 
-  setProfile(data);
-}
+  /*
+   * ÖPPNA KAMERA
+   */
 
   function openCamera() {
     setCameraOpen(true);
   }
 
+  /*
+   * STÄNG KAMERA
+   */
+
   function closeCamera() {
     setCameraOpen(false);
   }
+
+  /*
+   * BILD TAGEN
+   */
 
   function handlePhotoTaken(photo) {
     setTakenPhoto(photo);
     setCameraOpen(false);
   }
 
-
-  async function completePromi() {
-  if (!selectedPromi) {
-    return;
-  }
-
-  setError("");
-
-  const { error } = await supabase.rpc(
-    "complete_promi",
-    {
-      p_promi_id: selectedPromi.id
-    }
-  );
-
-  if (error) {
-    console.error(error);
-    setError(error.message);
-    return;
-  }
-
-  // Hämta dagens PROMISAR igen.
-  // Den genomförda är nu borttagen och
-  // nästa PROMI kan fyllas på senare.
-  await loadPromisar();
-
-  setTakenPhoto(null);
-  setSelectedPromi(null);
-}
-
-  
+  /*
+   * TILLBAKA TILL STARTSIDAN
+   */
 
   function backToHome() {
     setSelectedPromi(null);
     setTakenPhoto(null);
+    setCameraOpen(false);
   }
+
+  /*
+   * STARTA UPPLÅSNINGSANIMATION
+   */
+
+  function unlockPromi(promi) {
+    // Om PROMIN redan är upplåst
+    // behövs ingen animation.
+    if (unlockedPromis.includes(promi.id)) {
+      setSelectedPromi(promi);
+      return;
+    }
+
+    // Detail view renderas bakom animationen.
+    setSelectedPromi(promi);
+
+    // Starta upplåsningsanimationen.
+    setUnlockingPromi(promi);
+  }
+
+  /*
+   * UPPLÅSNING KLAR
+   */
+
+  function finishUnlock(event) {
+    // animationend bubblar från barn-element.
+    // Vi vill bara reagera när själva overlay-animationen är klar.
+    if (event && event.target !== event.currentTarget) {
+      return;
+    }
+
+    if (!unlockingPromi) {
+      return;
+    }
+
+    const promi = unlockingPromi;
+
+    setUnlockedPromis((current) => {
+      if (current.includes(promi.id)) {
+        return current;
+      }
+
+      return [...current, promi.id];
+    });
+
+    setUnlockingPromi(null);
+  }
+
+  /*
+   * GENOMFÖR PROMI
+   */
+
+  async function completePromi() {
+    if (!selectedPromi) {
+      return;
+    }
+
+    setError("");
+
+    const {
+      error
+    } = await supabase.rpc(
+      "complete_promi",
+      {
+        p_promi_id: selectedPromi.id
+      }
+    );
+
+    if (error) {
+      console.error(error);
+      setError(error.message);
+      return;
+    }
+
+    // Hämta de nya dagens PROMISAR.
+    await loadPromisar();
+
+    // Uppdatera poängen direkt.
+    if (session) {
+      await loadProfile(session.user.id);
+    }
+
+    setTakenPhoto(null);
+    setSelectedPromi(null);
+  }
+
+  /*
+   * LADDA
+   */
 
   if (loading) {
     return (
@@ -151,13 +244,17 @@ function App() {
     );
   }
 
+  /*
+   * INTE INLOGGAD
+   */
+
   if (!session) {
     return <Auth onLogin={() => {}} />;
   }
 
   /*
-    KAMERAN
-  */
+   * KAMERA
+   */
 
   if (cameraOpen && selectedPromi) {
     return (
@@ -169,8 +266,8 @@ function App() {
   }
 
   /*
-    BILDEN ÄR TAGEN
-  */
+   * BILDEN ÄR TAGEN
+   */
 
   if (takenPhoto && selectedPromi) {
     const points =
@@ -209,6 +306,12 @@ function App() {
             </strong>
           </div>
 
+          {error && (
+            <p className="status">
+              Fel: {error}
+            </p>
+          )}
+
           <button
             className="start-button"
             onClick={completePromi}
@@ -221,8 +324,8 @@ function App() {
   }
 
   /*
-    DETAIL VIEW
-  */
+   * DETAIL VIEW
+   */
 
   if (selectedPromi) {
     const points =
@@ -264,10 +367,17 @@ function App() {
           {selectedPromi.Bonus && (
             <div className="bonus-preview">
               <strong>Bonus</strong>
+
               <p>
                 {selectedPromi.Bonus}
               </p>
             </div>
+          )}
+
+          {error && (
+            <p className="status">
+              Fel: {error}
+            </p>
           )}
 
           <button
@@ -282,34 +392,57 @@ function App() {
   }
 
   /*
-    STARTSIDA
-  */
+   * STARTSIDA
+   */
 
   return (
     <main className="app">
-      <h1 className="logo">PROMI</h1>
+
+      <h1 className="logo">
+        PROMI
+      </h1>
+
+      {/* POÄNG + STREAK */}
 
       <div className="stats-display">
 
         <div className="stat-card">
-          <span className="stat-icon">★</span>
-      
+          <span className="stat-icon">
+            ★
+          </span>
+
           <div className="stat-content">
-            <span className="stat-label">POÄNG</span>
-            <strong>{profile?.poäng ?? 0}</strong>
+            <span className="stat-label">
+              POÄNG
+            </span>
+
+            <strong>
+              {profile?.poäng ?? 0}
+            </strong>
           </div>
         </div>
-      
+
+
         <div className="stat-card">
-          <span className="stat-icon">🔥</span>
-      
+          <span className="stat-icon">
+            🔥
+          </span>
+
           <div className="stat-content">
-            <span className="stat-label">STREAK</span>
-            <strong>{profile?.streak ?? 0}</strong>
+            <span className="stat-label">
+              STREAK
+            </span>
+
+            <strong>
+              {profile?.streak ?? 0}
+            </strong>
           </div>
         </div>
-      
+
       </div>
+
+
+      {/* FEL */}
 
       {error && (
         <p className="status">
@@ -317,31 +450,61 @@ function App() {
         </p>
       )}
 
+
+      {/* PROMISAR */}
+
       <div className="promi-grid">
+
         {promisar.map((promi) => (
+
           <button
             key={promi.id}
             className="promi-card"
-            onClick={() => {
-              setUnlockedPromis((current) => {
-                if (current.includes(promi.id)) {
-                  return current;
-                }
-            
-                return [...current, promi.id];
-              });
-            
-              setSelectedPromi(promi);
-            }}
+            onClick={() =>
+              unlockPromi(promi)
+            }
           >
+
             <span className="lock">
-              {unlockedPromis.includes(promi.id)
+              {unlockedPromis.includes(
+                promi.id
+              )
                 ? promi.Emoji
                 : "🔒"}
             </span>
+
           </button>
+
         ))}
+
       </div>
+
+
+      {/* UPPLÅSNINGSANIMATION */}
+
+      {unlockingPromi && (
+
+        <div
+          className="unlock-overlay"
+          onAnimationEnd={finishUnlock}
+        >
+
+          <div className="unlock-icon">
+
+            <span className="unlock-lock">
+              🔒
+            </span>
+
+            <span className="unlock-emoji">
+              {unlockingPromi.Emoji}
+            </span>
+
+          </div>
+
+        </div>
+
+      )}
+
     </main>
   );
 }

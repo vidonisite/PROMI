@@ -85,10 +85,7 @@ function App() {
 
     if (unlockPhase === "unlocking") {
       const timer = setTimeout(() => {
-        // Detail view börjar åka upp bakom overlayen.
         setSelectedPromi(unlockingPromi);
-
-        // Emojin börjar falla.
         setUnlockPhase("transitioning");
       }, 1350);
 
@@ -163,13 +160,11 @@ function App() {
    */
 
   function unlockPromi(promi) {
-    // Redan upplåst → öppna direkt.
     if (unlockedPromis.includes(promi.id)) {
       setSelectedPromi(promi);
       return;
     }
 
-    // Låst → starta animationen.
     setUnlockingPromi(promi);
     setUnlockPhase("unlocking");
   }
@@ -235,10 +230,8 @@ function App() {
       return;
     }
 
-    // Hämta dagens PROMISAR igen.
     await loadPromisar();
 
-    // Uppdatera poäng och streak.
     if (session) {
       await loadProfile(session.user.id);
     }
@@ -290,87 +283,58 @@ function App() {
 
     return (
       <main className="app">
-    
-        {activeTab === "bo" && (
-          <>
-            {/* DIN VANLIGA STARTSIDA HÄR */}
-          </>
-        )}
-    
-        {activeTab === "leaderboard" && (
-          <div className="placeholder-page">
-            <h1>Leaderboard</h1>
+
+        <button
+          className="back-button"
+          onClick={backToHome}
+        >
+          ← Tillbaka
+        </button>
+
+        <section className="detail-card">
+
+          <img
+            className="taken-photo"
+            src={takenPhoto}
+            alt="Din PROMI-bild"
+          />
+
+          <h1>
+            {selectedPromi.Namn}
+          </h1>
+
+          <p className="detail-hitta">
+            {selectedPromi.Hitta}
+          </p>
+
+          <div className="detail-info">
+
+            <span>
+              Svårighetsgrad{" "}
+              {selectedPromi["Svårighetsgrad"]}/3
+            </span>
+
+            <strong>
+              +{points} poäng
+            </strong>
+
           </div>
-        )}
-    
-        {activeTab === "feed" && (
-          <div className="placeholder-page">
-            <h1>Flödet</h1>
-          </div>
-        )}
-    
-        {activeTab === "create" && (
-          <div className="placeholder-page">
-            <h1>Skapa</h1>
-          </div>
-        )}
-    
-        <nav className="bottom-nav">
-    
+
+          {error && (
+            <p className="status">
+              Fel: {error}
+            </p>
+          )}
+
           <button
-            className={
-              activeTab === "bo"
-                ? "nav-item active"
-                : "nav-item"
-            }
-            onClick={() => setActiveTab("bo")}
+            className="start-button"
+            onClick={completePromi}
           >
-            <span>🏠</span>
-            <small>Bo</small>
+            FORTSÄTT
           </button>
-    
-          <button
-            className={
-              activeTab === "leaderboard"
-                ? "nav-item active"
-                : "nav-item"
-            }
-            onClick={() =>
-              setActiveTab("leaderboard")
-            }
-          >
-            <span>🏆</span>
-            <small>Leaderboard</small>
-          </button>
-    
-          <button
-            className={
-              activeTab === "feed"
-                ? "nav-item active"
-                : "nav-item"
-            }
-            onClick={() => setActiveTab("feed")}
-          >
-            <span>✨</span>
-            <small>Flödet</small>
-          </button>
-    
-          <button
-            className={
-              activeTab === "create"
-                ? "nav-item active"
-                : "nav-item"
-            }
-            onClick={() =>
-              setActiveTab("create")
-            }
-          >
-            <span>＋</span>
-            <small>Skapa</small>
-          </button>
-    
-        </nav>
-    
+
+        </section>
+
       </main>
     );
   }
@@ -394,9 +358,10 @@ function App() {
 
         <button
           className="back-button"
-          onClick={() =>
-            setSelectedPromi(null)
-          }
+          onClick={() => {
+            setSelectedPromi(null);
+            setUnlockPhase("idle");
+          }}
         >
           ← Tillbaka
         </button>
@@ -462,103 +427,230 @@ function App() {
   }
 
   /*
-   * STARTSIDA
+   * HUVUDAPPEN
    */
 
   return (
     <main className="app">
 
-      {/* POÄNG + STREAK */}
+      {/* =========================
+          BO
+      ========================= */}
 
-      <div className="stats-section">
+      {activeTab === "bo" && (
+        <>
 
-        <div className="stats-display">
+          {/* POÄNG + STREAK */}
 
-          {/* POÄNG */}
+          <div className="stats-section">
 
-          <div className="stat-card">
+            <div className="stats-display">
 
-            <span className="stat-icon">
-              ★
-            </span>
+              <div className="stat-card">
 
-            <div className="stat-content">
+                <span className="stat-icon">
+                  ★
+                </span>
 
-              <span className="stat-label">
-                POÄNG
-              </span>
+                <div className="stat-content">
 
-              <strong>
-                {profile?.poäng ?? 0}
-              </strong>
+                  <span className="stat-label">
+                    POÄNG
+                  </span>
+
+                  <strong>
+                    {profile?.poäng ?? 0}
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div className="stat-card">
+
+                <span className="stat-icon">
+                  🔥
+                </span>
+
+                <div className="stat-content">
+
+                  <span className="stat-label">
+                    STREAK
+                  </span>
+
+                  <strong>
+                    {profile?.streak ?? 0}
+                  </strong>
+
+                </div>
+
+              </div>
 
             </div>
 
           </div>
 
 
-          {/* STREAK */}
+          {/* FELMEDDELANDE */}
 
-          <div className="stat-card">
+          {error && (
+            <p className="status">
+              Fel: {error}
+            </p>
+          )}
 
-            <span className="stat-icon">
-              🔥
-            </span>
 
-            <div className="stat-content">
+          {/* PROMISAR */}
 
-              <span className="stat-label">
-                STREAK
-              </span>
+          <div className="promi-grid">
 
-              <strong>
-                {profile?.streak ?? 0}
-              </strong>
+            {promisar.slice(0, 4).map((promi) => (
 
-            </div>
+              <button
+                key={promi.id}
+                className="promi-card"
+                onClick={() =>
+                  unlockPromi(promi)
+                }
+              >
+
+                <span className="lock">
+
+                  {unlockedPromis.includes(
+                    promi.id
+                  )
+                    ? promi.Emoji
+                    : "🔒"}
+
+                </span>
+
+              </button>
+
+            ))}
 
           </div>
 
-        </div>
-
-      </div>
-
-
-      {/* FELMEDDELANDE */}
-
-      {error && (
-        <p className="status">
-          Fel: {error}
-        </p>
+        </>
       )}
 
 
-      {/* PROMISAR */}
+      {/* =========================
+          LEADERBOARD
+      ========================= */}
 
-      <div className="promi-grid">
+      {activeTab === "leaderboard" && (
+        <div className="placeholder-page">
 
-        {promisar.slice(0, 4).map((promi) => (
-      
-          <button
-            key={promi.id}
-            className="promi-card"
-            onClick={() => unlockPromi(promi)}
-          >
-      
-            <span className="lock">
-              {unlockedPromis.includes(promi.id)
-                ? promi.Emoji
-                : "🔒"}
-            </span>
-      
-          </button>
-      
-        ))}
-      
-      </div>
+          <h1>
+            Leaderboard
+          </h1>
+
+        </div>
+      )}
 
 
-      {/* UPPLÅSNINGSOVERLAY */}
+      {/* =========================
+          FLÖDET
+      ========================= */}
+
+      {activeTab === "feed" && (
+        <div className="placeholder-page">
+
+          <h1>
+            Flödet
+          </h1>
+
+        </div>
+      )}
+
+
+      {/* =========================
+          SKAPA
+      ========================= */}
+
+      {activeTab === "create" && (
+        <div className="placeholder-page">
+
+          <h1>
+            Skapa
+          </h1>
+
+        </div>
+      )}
+
+
+      {/* =========================
+          NAVBAR
+      ========================= */}
+
+      <nav className="bottom-nav">
+
+        <button
+          className={
+            activeTab === "bo"
+              ? "nav-item active"
+              : "nav-item"
+          }
+          onClick={() =>
+            setActiveTab("bo")
+          }
+        >
+          <span>🏠</span>
+          <small>Bo</small>
+        </button>
+
+
+        <button
+          className={
+            activeTab === "leaderboard"
+              ? "nav-item active"
+              : "nav-item"
+          }
+          onClick={() =>
+            setActiveTab("leaderboard")
+          }
+        >
+          <span>🏆</span>
+          <small>Leaderboard</small>
+        </button>
+
+
+        <button
+          className={
+            activeTab === "feed"
+              ? "nav-item active"
+              : "nav-item"
+          }
+          onClick={() =>
+            setActiveTab("feed")
+          }
+        >
+          <span>✨</span>
+          <small>Flödet</small>
+        </button>
+
+
+        <button
+          className={
+            activeTab === "create"
+              ? "nav-item active"
+              : "nav-item"
+          }
+          onClick={() =>
+            setActiveTab("create")
+          }
+        >
+          <span>＋</span>
+          <small>Skapa</small>
+        </button>
+
+      </nav>
+
+
+      {/* =========================
+          UPPLÅSNINGSOVERLAY
+      ========================= */}
 
       {unlockingPromi && (
 

@@ -163,11 +163,15 @@ function App() {
    */
 
   function unlockPromi(promi) {
+    // Om PROMI:n redan är upplåst → öppna direkt
     if (unlockedPromis.includes(promi.id)) {
+      setUnlockingPromi(null);
+      setUnlockPhase("idle");
       setSelectedPromi(promi);
       return;
     }
-
+  
+    // Låst → starta upplåsningsanimationen
     setUnlockingPromi(promi);
     setUnlockPhase("unlocking");
   }
@@ -205,6 +209,10 @@ function App() {
     setSelectedPromi(null);
     setTakenPhoto(null);
     setCameraOpen(false);
+  
+    // Stoppa eventuell pågående upplåsningsanimation
+    setUnlockingPromi(null);
+    setUnlockPhase("idle");
   }
 
   /*
@@ -396,6 +404,7 @@ function App() {
           className="back-button"
           onClick={() => {
             setSelectedPromi(null);
+            setUnlockingPromi(null);
             setUnlockPhase("idle");
           }}
         >

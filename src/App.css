@@ -145,7 +145,7 @@ button {
   max-width: 500px;
 
   margin: 0 auto;
-  padding: 25px 20px 40px;
+  padding: 0px 20px 40px;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);

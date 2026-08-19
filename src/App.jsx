@@ -505,6 +505,10 @@ function App() {
 
           <div className="promi-grid">
 
+            <span className="dagsförenpromi">
+              <h2>Dags för en PROMI?</h2>
+            </span>
+
             {promisar.slice(0, 4).map((promi) => (
 
               <button

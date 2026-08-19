@@ -813,14 +813,14 @@ button {
 
 
 /* =========================================
-   PROMI FALLER BORT
+   PROMI FALLER NER
 ========================================= */
 
 .promi-card-removing {
   animation:
     promiFall
-    0.65s
-    cubic-bezier(0.55, 0, 1, 0.45)
+    0.9s
+    cubic-bezier(0.55, 0, 0.9, 0.5)
     forwards;
 
   pointer-events: none;
@@ -830,21 +830,31 @@ button {
 
   0% {
     opacity: 1;
-
     transform:
       translateY(0)
       rotate(0deg);
   }
 
-  25% {
+  20% {
     transform:
-      translateY(15px)
-      rotate(3deg);
+      translateY(8px)
+      rotate(1deg);
+  }
+
+  45% {
+    transform:
+      translateY(30px)
+      rotate(4deg);
+  }
+
+  70% {
+    transform:
+      translateY(100px)
+      rotate(8deg);
   }
 
   100% {
     opacity: 0;
-
     transform:
       translateY(110vh)
       rotate(15deg);
@@ -859,7 +869,7 @@ button {
 .promi-card-entering {
   animation:
     promiEnter
-    0.65s
+    0.85s
     cubic-bezier(0.22, 1, 0.36, 1)
     forwards;
 }
@@ -868,23 +878,32 @@ button {
 
   0% {
     opacity: 0;
-
     transform:
       translateX(100vw)
       rotate(8deg);
   }
 
-  65% {
+  30% {
     opacity: 1;
-
     transform:
-      translateX(-12px)
+      translateX(55vw)
+      rotate(5deg);
+  }
+
+  65% {
+    transform:
+      translateX(-15px)
       rotate(-2deg);
+  }
+
+  85% {
+    transform:
+      translateX(5px)
+      rotate(1deg);
   }
 
   100% {
     opacity: 1;
-
     transform:
       translateX(0)
       rotate(0deg);

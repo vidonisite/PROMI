@@ -63,6 +63,22 @@ button {
    POÄNG + STREAK
 ========================================= */
 
+.stats-section::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: env(safe-area-inset-top);
+
+  background: #86B48D;
+
+  z-index: 0;
+}
+
 .stats-display {
   width: 100%;
   max-width: 500px;

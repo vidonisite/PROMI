@@ -1,217 +1,84 @@
+/* =========================================
+   GRUND
+========================================= */
+
 * {
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  width: 100%;
+}
+
 body {
   margin: 0;
+  background: #FEF8DC;
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  color: #222;
 }
 
 button {
   font: inherit;
 }
 
+
+/* =========================================
+   APP
+========================================= */
+
 .app {
   min-height: 100vh;
-  padding: 30px 20px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
   background: #FEF8DC;
+
+  box-sizing: border-box;
 }
 
-.logo {
-  margin: 0 0 30px;
-  text-align: center;
-  font-size: 40px;
-  font-weight: 800;
-}
 
-.promi-grid {
+/* =========================================
+   POÄNG + STREAK SEKTION
+========================================= */
+
+.stats-section {
+  position: relative;
+
   width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-}
+  margin: 0;
 
-.promi-card {
-  aspect-ratio: 1;
-  border: none;
-  border-radius: 24px;
+  padding: 28px 20px 32px;
+
   background: #6B9071;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.15s ease;
-}
 
-.promi-card:active {
-  transform: scale(0.96);
-}
-
-.lock {
-  font-size: 95px;
-}
-
-.status {
-  padding: 40px;
-  text-align: center;
-}
-
-/* Detail view */
-
-.back-button {
-  border: none;
-  background: none;
-  padding: 10px 0;
-  margin-bottom: 20px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
-.detail-card {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 35px 25px;
-  background: white;
-  border-radius: 28px;
-  text-align: center;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-}
-
-.detail-emoji {
-  font-size: 90px;
-  margin-bottom: 20px;
-}
-
-.detail-card h1 {
-  margin: 0 0 15px;
-  font-size: 32px;
-}
-
-.detail-hitta {
-  font-size: 20px;
-  margin: 0 0 30px;
-}
-
-.detail-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 0;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-}
-
-.start-button {
-  width: 100%;
-  margin-top: 25px;
-  padding: 16px;
-  border: none;
-  border-radius: 16px;
-  background: #6B9071;
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-  font-size: 18px;
+  box-sizing: border-box;
 }
 
 
-.back-button {
-  border: none;
-  background: none;
-  padding: 10px 0;
-  margin-bottom: 20px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
-.detail-card {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 35px 25px;
-  background: white;
-  border-radius: 28px;
-  text-align: center;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-}
-
-.detail-emoji {
-  font-size: 90px;
-  margin-bottom: 20px;
-}
-
-.detail-card h1 {
-  margin: 0 0 15px;
-  font-size: 32px;
-}
-
-.detail-hitta {
-  font-size: 20px;
-  margin: 0 0 30px;
-}
-
-.detail-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 0;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-}
-
-.bonus-preview {
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 16px;
-  background: #f1f5f2;
-}
-
-.bonus-preview p {
-  margin-bottom: 0;
-}
-
-.start-button {
-  width: 100%;
-  margin-top: 25px;
-  padding: 16px;
-  border: none;
-  border-radius: 16px;
-  background: #6B9071;
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-  font-size: 18px;
-}
-
-
-.taken-photo {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  display: block;
-  border-radius: 18px;
-  margin-bottom: 25px;
-}
-
+/* =========================================
+   POÄNG + STREAK
+========================================= */
 
 .stats-display {
   width: 100%;
   max-width: 500px;
-  margin: 0 auto 24px;
+
+  margin: 0 auto;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
+
   gap: 12px;
 }
 
 .stat-card {
   display: flex;
   align-items: center;
+
   gap: 10px;
 
   padding: 13px 14px;
@@ -248,167 +115,325 @@ button {
 .stat-content {
   display: flex;
   flex-direction: column;
+
   gap: 2px;
 }
 
 .stat-label {
   font-size: 9px;
   font-weight: 700;
+
   letter-spacing: 1.5px;
+
   opacity: 0.8;
 }
 
 .stat-content strong {
   font-size: 22px;
   line-height: 1;
+
   font-weight: 800;
 }
 
 
-.unlock-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
+/* =========================================
+   PROMI GRID
+========================================= */
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.promi-grid {
+  position: relative;
+
+  width: 100%;
+  max-width: 500px;
+
+  margin: 0 auto;
+
+  padding: 25px 20px 40px;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+
+  background: #FEF8DC;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   PROMI KORT
+========================================= */
+
+.promi-card {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+
+  border: none;
+
+  border-radius: 22px;
 
   background: #6B9071;
 
-  animation: unlockOverlay 1.35s ease-in-out forwards;
-
-  will-change: opacity;
-}
-
-.unlock-icon {
-  position: relative;
-
-  width: 180px;
-  height: 180px;
-
   display: flex;
   align-items: center;
   justify-content: center;
 
-  will-change: transform;
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 0 #4f7055,
+    0 8px 16px rgba(0, 0, 0, 0.08);
+
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-.unlock-lock,
-.unlock-emoji {
-  position: absolute;
+.promi-card:active {
+  transform: translateY(4px);
 
+  box-shadow:
+    0 1px 0 #4f7055,
+    0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.lock {
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 180px;
-  height: 180px;
-
-  font-size: 120px;
+  font-size: 58px;
 
   line-height: 1;
 
-  transform-origin: center;
-  will-change: transform, opacity;
+  user-select: none;
 }
 
 
-/* LÅSET */
+/* =========================================
+   FEL / STATUS
+========================================= */
 
-.unlock-lock {
-  animation: unlockLock 0.85s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    forwards;
+.status {
+  margin: 20px;
+
+  text-align: center;
+
+  color: #6B9071;
+
+  font-size: 14px;
 }
 
 
-/* EMOJIN */
+/* =========================================
+   DETAIL VIEW
+========================================= */
 
-.unlock-emoji {
-  opacity: 0;
+.detail-card {
+  width: calc(100% - 40px);
+  max-width: 500px;
 
-  animation: unlockEmoji 0.55s
-    cubic-bezier(0.34, 1.56, 0.64, 1)
-    0.72s forwards;
+  margin: 30px auto;
+
+  padding: 25px;
+
+  background: white;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.08);
+
+  text-align: center;
+}
+
+.detail-emoji {
+  width: 120px;
+  height: 120px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 80px;
+
+  background: #6B9071;
+
+  border-radius: 30px;
+}
+
+.detail-card h1 {
+  margin: 10px 0;
+
+  font-size: 28px;
+
+  color: #244D3C;
+}
+
+.detail-hitta {
+  margin: 0 0 20px;
+
+  font-size: 17px;
+
+  line-height: 1.4;
+
+  color: #444;
+}
+
+.detail-info {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin: 20px 0;
+
+  padding: 14px;
+
+  border-radius: 14px;
+
+  background: #FEF8DC;
+
+  color: #244D3C;
+
+  font-size: 14px;
+}
+
+.detail-info strong {
+  color: #6B9071;
 }
 
 
-/* BAKGRUNDEN */
+/* =========================================
+   BONUS
+========================================= */
 
-@keyframes unlockOverlay {
-  0% {
-    opacity: 0;
-  }
+.bonus-preview {
+  margin-top: 15px;
 
-  12% {
-    opacity: 1;
-  }
+  padding: 16px;
 
-  75% {
-    opacity: 1;
-  }
+  border-radius: 16px;
 
-  100% {
-    opacity: 0;
-  }
+  background: #FEF8DC;
+
+  text-align: left;
+}
+
+.bonus-preview strong {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #6B9071;
+}
+
+.bonus-preview p {
+  margin: 0;
+
+  color: #444;
+
+  line-height: 1.4;
 }
 
 
-/* LÅSET */
+/* =========================================
+   KNAPPAR
+========================================= */
 
-@keyframes unlockLock {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
+.start-button {
+  width: 100%;
 
-  45% {
-    opacity: 1;
-    transform: scale(1.35);
-  }
+  margin-top: 20px;
 
-  72% {
-    opacity: 1;
-    transform: scale(1.8);
-  }
+  padding: 16px 20px;
 
-  100% {
-    opacity: 0;
-    transform: scale(2.05);
-  }
+  border: none;
+
+  border-radius: 16px;
+
+  background: #6B9071;
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 0 #4f7055;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.start-button:active {
+  transform: translateY(4px);
+
+  box-shadow:
+    0 0 0 #4f7055;
+}
+
+.back-button {
+  margin: 20px;
+
+  padding: 10px 14px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: transparent;
+
+  color: #244D3C;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
 }
 
 
-/* EMOJI */
+/* =========================================
+   TAGEN BILD
+========================================= */
 
-@keyframes unlockEmoji {
-  0% {
-    opacity: 0;
-    transform: scale(0.35) rotate(-12deg);
-  }
+.taken-photo {
+  width: 100%;
 
-  55% {
-    opacity: 1;
-    transform: scale(1.15) rotate(6deg);
-  }
+  aspect-ratio: 1 / 1;
 
-  75% {
-    opacity: 1;
-    transform: scale(0.95) rotate(-2deg);
-  }
+  object-fit: cover;
 
-  100% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
+  display: block;
+
+  margin-bottom: 20px;
+
+  border-radius: 18px;
 }
 
 
+/* =========================================
+   UNLOCK OVERLAY
+========================================= */
 
 .unlock-overlay {
   position: fixed;
+
   inset: 0;
+
   z-index: 9999;
 
   display: flex;
@@ -417,8 +442,13 @@ button {
 
   background: #6B9071;
 
-  animation: unlockBackground 1.35s ease-in-out forwards;
+  pointer-events: none;
 }
+
+
+/* =========================================
+   UNLOCK ICON
+========================================= */
 
 .unlock-icon {
   position: relative;
@@ -448,222 +478,200 @@ button {
 
   line-height: 1;
 
-  will-change: transform, opacity;
+  transform-origin: center;
+
+  will-change:
+    transform,
+    opacity;
 }
 
 
-/* 🔒 */
+/* =========================================
+   LÅS → UT
+========================================= */
 
 .unlock-lock {
-  animation: lockOut 0.85s
+  animation:
+    lockOut
+    0.85s
     cubic-bezier(0.22, 1, 0.36, 1)
     forwards;
 }
 
+@keyframes lockOut {
 
-/* 🧸 */
+  0% {
+    opacity: 1;
+
+    transform:
+      scale(1);
+  }
+
+  45% {
+    opacity: 1;
+
+    transform:
+      scale(1.35);
+  }
+
+  72% {
+    opacity: 1;
+
+    transform:
+      scale(1.7);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      scale(2);
+  }
+}
+
+
+/* =========================================
+   EMOJI IN
+========================================= */
 
 .unlock-emoji {
   opacity: 0;
 
-  animation: emojiIn 0.55s
+  animation:
+    emojiIn
+    0.55s
     cubic-bezier(0.34, 1.56, 0.64, 1)
-    0.72s forwards;
-}
-
-
-/* Första fasen */
-
-@keyframes unlockBackground {
-  0% {
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes lockOut {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.35);
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(2);
-  }
+    0.72s
+    forwards;
 }
 
 @keyframes emojiIn {
+
   0% {
     opacity: 0;
-    transform: scale(0.3) rotate(-15deg);
+
+    transform:
+      scale(0.3)
+      rotate(-15deg);
   }
 
   60% {
     opacity: 1;
-    transform: scale(1.15) rotate(6deg);
+
+    transform:
+      scale(1.15)
+      rotate(6deg);
   }
 
   100% {
     opacity: 1;
-    transform: scale(1) rotate(0);
+
+    transform:
+      scale(1)
+      rotate(0deg);
   }
 }
 
-.unlock-transitioning {
-  animation: unlockBackgroundOut 0.85s ease-in forwards;
-}
 
-.unlock-transitioning .unlock-emoji {
-  animation: emojiFall 0.85s
-    cubic-bezier(0.55, 0, 1, 0.45)
-    forwards;
-}
-
-@keyframes unlockBackgroundOut {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes emojiFall {
-  0% {
-    opacity: 1;
-    transform: translateY(0) rotate(0deg);
-  }
-
-  25% {
-    transform: translateY(25px) rotate(5deg);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(120vh) rotate(25deg);
-  }
-}
+/* =========================================
+   DETAIL VIEW ÅKER UPP
+========================================= */
 
 .detail-enter {
-  animation: detailSlideUp 0.85s
+  animation:
+    detailSlideUp
+    0.85s
     cubic-bezier(0.22, 1, 0.36, 1)
     forwards;
 }
 
 @keyframes detailSlideUp {
+
   from {
-    transform: translateY(100vh);
+    transform:
+      translateY(100vh);
   }
 
   to {
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
 }
 
 
-.stats-section {
-  position: relative;
+/* =========================================
+   EMOJI FALLER UT
+========================================= */
 
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-
-  padding: 28px 20px 70px;
-
-  background: #6B9071;
-
-  box-sizing: border-box;
-
-  overflow: hidden;
+.unlock-transitioning .unlock-emoji {
+  animation:
+    emojiFall
+    0.85s
+    cubic-bezier(0.55, 0, 1, 0.45)
+    forwards;
 }
 
-.stats-section::after {
-  content: "";
+@keyframes emojiFall {
 
-  position: absolute;
+  0% {
+    opacity: 1;
 
-  left: 0;
-  bottom: -1px;
+    transform:
+      translateY(0)
+      rotate(0deg);
+  }
 
-  width: 100%;
-  height: 24px;
+  25% {
+    opacity: 1;
 
-  background: #FEF8DC;
+    transform:
+      translateY(25px)
+      rotate(5deg);
+  }
 
-  clip-path: polygon(
-    0% 0%,
-    2% 100%,
-    4% 0%,
-    6% 100%,
-    8% 0%,
-    10% 100%,
-    12% 0%,
-    14% 100%,
-    16% 0%,
-    18% 100%,
-    20% 0%,
-    22% 100%,
-    24% 0%,
-    26% 100%,
-    28% 0%,
-    30% 100%,
-    32% 0%,
-    34% 100%,
-    36% 0%,
-    38% 100%,
-    40% 0%,
-    42% 100%,
-    44% 0%,
-    46% 100%,
-    48% 0%,
-    50% 100%,
-    52% 0%,
-    54% 100%,
-    56% 0%,
-    58% 100%,
-    60% 0%,
-    62% 100%,
-    64% 0%,
-    66% 100%,
-    68% 0%,
-    70% 100%,
-    72% 0%,
-    74% 100%,
-    76% 0%,
-    78% 100%,
-    80% 0%,
-    82% 100%,
-    84% 0%,
-    86% 100%,
-    88% 0%,
-    90% 100%,
-    92% 0%,
-    94% 100%,
-    96% 0%,
-    98% 100%,
-    100% 0%,
-    100% 100%,
-    0% 100%
-  );
+  100% {
+    opacity: 0;
+
+    transform:
+      translateY(120vh)
+      rotate(25deg);
+  }
 }
 
 
-.promi-grid {
-  position: relative;
-  z-index: 1;
+/* =========================================
+   MOBIL
+========================================= */
 
-  background: #FEF8DC;
+@media (max-width: 380px) {
+
+  .stats-display {
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 11px;
+  }
+
+  .stat-icon {
+    width: 34px;
+    height: 34px;
+
+    font-size: 17px;
+  }
+
+  .stat-content strong {
+    font-size: 20px;
+  }
+
+  .promi-grid {
+    gap: 12px;
+
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .lock {
+    font-size: 50px;
+  }
 }

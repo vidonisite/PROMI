@@ -16,6 +16,7 @@ button {
 .app {
   min-height: 100vh;
   padding: 30px 20px;
+  background: #FEF8DC;
 }
 
 .logo {
@@ -571,4 +572,43 @@ button {
   to {
     transform: translateY(0);
   }
+}
+
+
+.stats-section {
+  position: relative;
+
+  width: 100%;
+
+  padding: 28px 20px 70px;
+
+  background: #6B9071;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+.stats-section::after {
+  content: "";
+
+  position: absolute;
+
+  left: -5%;
+  bottom: -25px;
+
+  width: 110%;
+  height: 65px;
+
+  background: #FEF8DC;
+
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+
+.promi-grid {
+  position: relative;
+  z-index: 1;
+
+  background: #FEF8DC;
 }

@@ -503,11 +503,13 @@ function App() {
 
           {/* PROMISAR */}
 
-          <div className="promi-grid">
-
-            <span className="dagsförenpromi">
+          <span className="dagsförenpromi">
               <h2>Dags för en PROMI?</h2>
             </span>
+
+          <div className="promi-grid">
+
+            
 
             {promisar.slice(0, 4).map((promi) => (
 

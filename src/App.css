@@ -10,14 +10,22 @@ html,
 body,
 #root {
   margin: 0;
-  min-height: 100%;
   width: 100%;
+  min-height: 100%;
+}
+
+html {
+  background: #6B9071;
 }
 
 body {
   margin: 0;
   background: #FEF8DC;
   font-family: Arial, sans-serif;
+
+  /* Gör att innehåll kan använda safe-area */
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 button {
@@ -30,14 +38,16 @@ button {
 ========================================= */
 
 .app {
-  min-height: 100vh;
+  position: relative;
+
   width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
   margin: 0;
   padding: 0;
 
   background: #FEF8DC;
-
-  box-sizing: border-box;
 }
 
 
@@ -51,32 +61,24 @@ button {
   width: 100%;
   margin: 0;
 
-  padding: 28px 20px 32px;
+  /*
+    Safe area läggs ovanpå den gröna sektionen.
+    Det gör att den gröna bakgrunden går hela vägen
+    upp mot statusfältet.
+  */
+  padding-top: calc(28px + env(safe-area-inset-top));
+
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 32px;
 
   background: #6B9071;
-
-  box-sizing: border-box;
 }
 
 
 /* =========================================
    POÄNG + STREAK
 ========================================= */
-
-.stats-section::before {
-  content: "";
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  height: env(safe-area-inset-top);
-
-  background: #B8F5B8;
-
-  z-index: 0;
-}
 
 .stats-display {
   width: 100%;
@@ -106,8 +108,6 @@ button {
   box-shadow:
     0 4px 0 #4f7055,
     0 8px 20px rgba(0, 0, 0, 0.08);
-
-  box-sizing: border-box;
 }
 
 .stat-icon {
@@ -152,6 +152,32 @@ button {
 
 
 /* =========================================
+   PROMI-RUBRIK
+========================================= */
+
+.dagsförenpromi {
+  display: block;
+
+  width: 100%;
+
+  margin: 0;
+
+  padding: 28px 20px 10px;
+
+  color: #6B9071;
+
+  text-align: center;
+}
+
+.dagsförenpromi h2 {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+/* =========================================
    PROMI GRID
 ========================================= */
 
@@ -160,15 +186,20 @@ button {
   max-width: 500px;
 
   margin: 0 auto;
-  padding: 0px 20px 40px;
+
+  padding:
+    10px
+    20px
+    120px;
 
   display: grid;
+
   grid-template-columns: repeat(2, 1fr);
+
   gap: 16px;
 
   background: #FEF8DC;
 }
-
 
 
 /* =========================================
@@ -176,24 +207,30 @@ button {
 ========================================= */
 
 .promi-card {
-   width: 100%;
-   aspect-ratio: 1 / 1;
-   
-   border: none;
-   border-radius: 22px;
-   
-   background: #6B9071;
-   
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   
-   cursor: pointer;
+  width: 100%;
 
-   box-shadow:
+  aspect-ratio: 1 / 1;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 22px;
+
+  background: #6B9071;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  box-shadow:
     0 4px 0 #4f7055,
     0 8px 20px rgba(0, 0, 0, 0.08);
 
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 }
 
 .promi-card:active {
@@ -209,8 +246,10 @@ button {
   align-items: center;
   justify-content: center;
 
-  font-size: 58px;
+  width: 100%;
+  height: 100%;
 
+  font-size: 58px;
   line-height: 1;
 
   user-select: none;
@@ -283,7 +322,6 @@ button {
   margin: 0 0 20px;
 
   font-size: 17px;
-
   line-height: 1.4;
 
   color: #444;
@@ -360,7 +398,6 @@ button {
   padding: 16px 20px;
 
   border: none;
-
   border-radius: 16px;
 
   background: #6B9071;
@@ -395,7 +432,6 @@ button {
   padding: 10px 14px;
 
   border: none;
-
   border-radius: 12px;
 
   background: transparent;
@@ -478,14 +514,11 @@ button {
   justify-content: center;
 
   font-size: 120px;
-
   line-height: 1;
 
   transform-origin: center;
 
-  will-change:
-    transform,
-    opacity;
+  will-change: transform, opacity;
 }
 
 
@@ -502,33 +535,24 @@ button {
 }
 
 @keyframes lockOut {
-
   0% {
     opacity: 1;
-
-    transform:
-      scale(1);
+    transform: scale(1);
   }
 
   45% {
     opacity: 1;
-
-    transform:
-      scale(1.35);
+    transform: scale(1.35);
   }
 
   72% {
     opacity: 1;
-
-    transform:
-      scale(1.7);
+    transform: scale(1.7);
   }
 
   100% {
     opacity: 0;
-
-    transform:
-      scale(2);
+    transform: scale(2);
   }
 }
 
@@ -549,7 +573,6 @@ button {
 }
 
 @keyframes emojiIn {
-
   0% {
     opacity: 0;
 
@@ -589,15 +612,12 @@ button {
 }
 
 @keyframes detailSlideUp {
-
   from {
-    transform:
-      translateY(100vh);
+    transform: translateY(100vh);
   }
 
   to {
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
 }
 
@@ -615,7 +635,6 @@ button {
 }
 
 @keyframes emojiFall {
-
   0% {
     opacity: 1;
 
@@ -643,44 +662,6 @@ button {
 
 
 /* =========================================
-   MOBIL
-========================================= */
-
-@media (max-width: 380px) {
-
-  .stats-display {
-    gap: 8px;
-  }
-
-  .stat-card {
-    padding: 11px;
-  }
-
-  .stat-icon {
-    width: 34px;
-    height: 34px;
-
-    font-size: 17px;
-  }
-
-  .stat-content strong {
-    font-size: 20px;
-  }
-
-  .promi-grid {
-    gap: 12px;
-
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  .lock {
-    font-size: 50px;
-  }
-}
-
-
-/* =========================================
    BOTTOM NAV
 ========================================= */
 
@@ -688,7 +669,8 @@ button {
   position: fixed;
 
   left: 50%;
-  bottom: 14px;
+
+  bottom: calc(14px + env(safe-area-inset-bottom));
 
   transform: translateX(-50%);
 
@@ -698,7 +680,9 @@ button {
   height: 68px;
 
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+
+  grid-template-columns:
+    repeat(4, 1fr);
 
   align-items: center;
 
@@ -742,7 +726,6 @@ button {
 
 .nav-item span {
   font-size: 22px;
-
   line-height: 1;
 }
 
@@ -769,11 +752,12 @@ button {
 
 .placeholder-page {
   min-height: 100vh;
+  min-height: 100dvh;
 
   padding:
     40px
     20px
-    110px;
+    120px;
 
   display: flex;
   align-items: center;
@@ -789,11 +773,39 @@ button {
 }
 
 
-.dagsförenpromi {
-   color: #6B9071;
-   text-align: center;
-   margin-top:10px;
-   margin-bottom: -50px;
-   font-weight: bold;
-   font-size: 20px;
+/* =========================================
+   MOBIL
+========================================= */
+
+@media (max-width: 380px) {
+
+  .stats-display {
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 11px;
+  }
+
+  .stat-icon {
+    width: 34px;
+    height: 34px;
+
+    font-size: 17px;
+  }
+
+  .stat-content strong {
+    font-size: 20px;
+  }
+
+  .promi-grid {
+    gap: 12px;
+
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .lock {
+    font-size: 50px;
+  }
 }

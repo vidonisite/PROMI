@@ -161,19 +161,24 @@ button {
 ========================================= */
 
 .promi-card {
-  width: 100%;
-  aspect-ratio: 1 / 1;
+   width: 100%;
+   aspect-ratio: 1 / 1;
+   
+   border: none;
+   border-radius: 22px;
+   
+   background: #6B9071;
+   
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   
+   cursor: pointer;
 
-  border: none;
-  border-radius: 22px;
+   box-shadow:
+    0 4px 0 #4f7055,
+    0 8px 20px rgba(0, 0, 0, 0.08);
 
-  background: #6B9071;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
 }
 
 .promi-card:active {

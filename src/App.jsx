@@ -152,17 +152,15 @@ function App() {
    */
 
   function unlockPromi(promi) {
-    // Om PROMIN redan är upplåst
-    // behövs ingen animation.
+    // Om PROMIN redan är upplåst:
+    // öppna detail view direkt.
     if (unlockedPromis.includes(promi.id)) {
       setSelectedPromi(promi);
       return;
     }
-
-    // Detail view renderas bakom animationen.
-    setSelectedPromi(promi);
-
-    // Starta upplåsningsanimationen.
+  
+    // Om den är låst ska vi INTE öppna detail view ännu.
+    // Först körs upplåsningsanimationen.
     setUnlockingPromi(promi);
   }
 
@@ -170,29 +168,30 @@ function App() {
    * UPPLÅSNING KLAR
    */
 
-  function finishUnlock(event) {
-    // animationend bubblar från barn-element.
-    // Vi vill bara reagera när själva overlay-animationen är klar.
-    if (event && event.target !== event.currentTarget) {
-      return;
-    }
-
-    if (!unlockingPromi) {
-      return;
-    }
-
-    const promi = unlockingPromi;
-
-    setUnlockedPromis((current) => {
-      if (current.includes(promi.id)) {
-        return current;
-      }
-
-      return [...current, promi.id];
-    });
-
-    setUnlockingPromi(null);
+function finishUnlock(event) {
+  if (event && event.target !== event.currentTarget) {
+    return;
   }
+
+  if (!unlockingPromi) {
+    return;
+  }
+
+  const promi = unlockingPromi;
+
+  setUnlockedPromis((current) => {
+    if (current.includes(promi.id)) {
+      return current;
+    }
+
+    return [...current, promi.id];
+  });
+
+  // Nu när animationen är klar öppnar vi detail view.
+  setSelectedPromi(promi);
+
+  setUnlockingPromi(null);
+}
 
   /*
    * GENOMFÖR PROMI

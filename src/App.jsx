@@ -25,6 +25,9 @@ function App() {
 
   const [activeTab, setActiveTab] = useState("bo");
 
+  const [removingPromiId, setRemovingPromiId] = useState(null);
+  const [enteringPromiId, setEnteringPromiId] = useState(null);
+
   /*
    * STARTA APPEN
    */
@@ -212,32 +215,65 @@ function App() {
     if (!selectedPromi) {
       return;
     }
-
+  
     setError("");
-
+  
+    const completedId = selectedPromi.id;
+  
     const {
       error,
     } = await supabase.rpc(
       "complete_promi",
       {
-        p_promi_id: selectedPromi.id,
+        p_promi_id: completedId,
       }
     );
-
+  
     if (error) {
       console.error(error);
       setError(error.message);
       return;
     }
-
-    await loadPromisar();
-
-    if (session) {
-      await loadProfile(session.user.id);
-    }
-
+  
     setTakenPhoto(null);
     setSelectedPromi(null);
+  
+    // FALL
+    setRemovingPromiId(completedId);
+  
+    setTimeout(async () => {
+  
+      const oldIds = promisar.map(
+        (promi) => promi.id
+      );
+  
+      await loadPromisar();
+  
+      // Hitta den nya PROMI:n
+      setPromisar((current) => {
+  
+        const newPromi = current.find(
+          (promi) => !oldIds.includes(promi.id)
+        );
+  
+        if (newPromi) {
+          setEnteringPromiId(newPromi.id);
+  
+          setTimeout(() => {
+            setEnteringPromiId(null);
+          }, 650);
+        }
+  
+        return current;
+      });
+  
+      setRemovingPromiId(null);
+  
+      if (session) {
+        await loadProfile(session.user.id);
+      }
+  
+    }, 650);
   }
 
   /*
@@ -515,10 +551,16 @@ function App() {
 
               <button
                 key={promi.id}
-                className="promi-card"
-                onClick={() =>
-                  unlockPromi(promi)
-                }
+                className={`promi-card ${
+                  removingPromiId === promi.id
+                    ? "promi-card-removing"
+                    : ""
+                } ${
+                  enteringPromiId === promi.id
+                    ? "promi-card-entering"
+                    : ""
+                }`}
+                onClick={() => unlockPromi(promi)}
               >
 
                 <span className="lock">

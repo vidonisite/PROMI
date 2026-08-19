@@ -663,3 +663,112 @@ button {
     font-size: 50px;
   }
 }
+
+
+/* =========================================
+   BOTTOM NAV
+========================================= */
+
+.bottom-nav {
+  position: fixed;
+
+  left: 50%;
+  bottom: 14px;
+
+  transform: translateX(-50%);
+
+  width: calc(100% - 24px);
+  max-width: 500px;
+
+  height: 68px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  align-items: center;
+
+  padding: 6px;
+
+  background: #6B9071;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.18);
+
+  z-index: 5000;
+}
+
+.nav-item {
+  height: 56px;
+
+  border: none;
+
+  background: transparent;
+
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+
+  border-radius: 17px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.nav-item span {
+  font-size: 22px;
+
+  line-height: 1;
+}
+
+.nav-item small {
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.3px;
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-item:active {
+  transform: scale(0.92);
+}
+
+
+/* =========================================
+   NAV PLACEHOLDER-SIDOR
+========================================= */
+
+.placeholder-page {
+  min-height: 100vh;
+
+  padding:
+    40px
+    20px
+    110px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #FEF8DC;
+
+  color: #244D3C;
+}
+
+.placeholder-page h1 {
+  font-size: 32px;
+}

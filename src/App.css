@@ -141,25 +141,19 @@ button {
 ========================================= */
 
 .promi-grid {
-  position: relative;
-
   width: 100%;
   max-width: 500px;
 
   margin: 0 auto;
-
   padding: 25px 20px 40px;
 
   display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 
   background: #FEF8DC;
-
-  box-sizing: border-box;
 }
+
 
 
 /* =========================================
@@ -171,7 +165,6 @@ button {
   aspect-ratio: 1 / 1;
 
   border: none;
-
   border-radius: 22px;
 
   background: #6B9071;
@@ -181,16 +174,6 @@ button {
   justify-content: center;
 
   cursor: pointer;
-
-  box-shadow:
-    0 5px 0 #4f7055,
-    0 8px 16px rgba(0, 0, 0, 0.08);
-
-  -webkit-tap-highlight-color: transparent;
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
 }
 
 .promi-card:active {

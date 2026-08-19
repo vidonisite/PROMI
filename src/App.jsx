@@ -491,7 +491,42 @@ function finishUnlock(event) {
           <div className="unlock-icon">
 
             <span className="unlock-lock">
-              🔒
+              <svg
+                viewBox="0 0 100 100"
+                aria-hidden="true"
+              >
+                <rect
+                  x="22"
+                  y="43"
+                  width="56"
+                  height="42"
+                  rx="8"
+                />
+            
+                <path
+                  d="M32 43V30C32 15 68 15 68 30V43"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="9"
+                  strokeLinecap="round"
+                />
+            
+                <circle
+                  cx="50"
+                  cy="62"
+                  r="5"
+                  fill="currentColor"
+                />
+            
+                <rect
+                  x="47"
+                  y="62"
+                  width="6"
+                  height="12"
+                  rx="3"
+                  fill="currentColor"
+                />
+              </svg>
             </span>
 
             <span className="unlock-emoji">

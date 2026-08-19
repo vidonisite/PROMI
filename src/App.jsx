@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
     async function startApp() {
       const {
-        data: { session }
+        data: { session },
       } = await supabase.auth.getSession();
 
       setSession(session);
@@ -46,7 +46,7 @@ function App() {
     startApp();
 
     const {
-      data: { subscription }
+      data: { subscription },
     } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         setSession(session);
@@ -74,9 +74,6 @@ function App() {
 
   /*
    * UPPLÅSNINGSANIMATION
-   *
-   * När låset -> emoji-animationen är klar
-   * börjar detail view åka upp.
    */
 
   useEffect(() => {
@@ -86,11 +83,10 @@ function App() {
 
     if (unlockPhase === "unlocking") {
       const timer = setTimeout(() => {
-        // Öppna detail view bakom overlayen
+        // Detail view börjar åka upp bakom overlayen.
         setSelectedPromi(unlockingPromi);
 
-        // Börja nästa del:
-        // emoji faller + detail view åker upp
+        // Emojin börjar falla.
         setUnlockPhase("transitioning");
       }, 1350);
 
@@ -126,7 +122,7 @@ function App() {
 
     const {
       data,
-      error
+      error,
     } = await supabase.rpc("get_daily_promis");
 
     if (error) {
@@ -145,7 +141,7 @@ function App() {
   async function loadProfile(userId) {
     const {
       data,
-      error
+      error,
     } = await supabase
       .from("profiles")
       .select("*")
@@ -165,15 +161,13 @@ function App() {
    */
 
   function unlockPromi(promi) {
-    // Redan upplåst:
-    // öppna detail view direkt.
+    // Redan upplåst → öppna direkt.
     if (unlockedPromis.includes(promi.id)) {
       setSelectedPromi(promi);
       return;
     }
 
-    // Låst PROMI:
-    // starta upplåsningsanimationen.
+    // Låst → starta animationen.
     setUnlockingPromi(promi);
     setUnlockPhase("unlocking");
   }
@@ -204,7 +198,7 @@ function App() {
   }
 
   /*
-   * TILLBAKA
+   * TILLBAKA TILL STARTSIDAN
    */
 
   function backToHome() {
@@ -225,11 +219,11 @@ function App() {
     setError("");
 
     const {
-      error
+      error,
     } = await supabase.rpc(
       "complete_promi",
       {
-        p_promi_id: selectedPromi.id
+        p_promi_id: selectedPromi.id,
       }
     );
 
@@ -242,8 +236,7 @@ function App() {
     // Hämta dagens PROMISAR igen.
     await loadPromisar();
 
-    // Hämta profilen igen så att
-    // poängen uppdateras direkt.
+    // Uppdatera poäng och streak.
     if (session) {
       await loadProfile(session.user.id);
     }
@@ -446,44 +439,52 @@ function App() {
 
       {/* POÄNG + STREAK */}
 
-      <div className="stats-display">
+      <div className="stats-section">
 
-        <div className="stat-card">
+        <div className="stats-display">
 
-          <span className="stat-icon">
-            ★
-          </span>
+          {/* POÄNG */}
 
-          <div className="stat-content">
+          <div className="stat-card">
 
-            <span className="stat-label">
-              POÄNG
+            <span className="stat-icon">
+              ★
             </span>
 
-            <strong>
-              {profile?.poäng ?? 0}
-            </strong>
+            <div className="stat-content">
+
+              <span className="stat-label">
+                POÄNG
+              </span>
+
+              <strong>
+                {profile?.poäng ?? 0}
+              </strong>
+
+            </div>
 
           </div>
 
-        </div>
 
+          {/* STREAK */}
 
-        <div className="stat-card">
+          <div className="stat-card">
 
-          <span className="stat-icon">
-            🔥
-          </span>
-
-          <div className="stat-content">
-
-            <span className="stat-label">
-              STREAK
+            <span className="stat-icon">
+              🔥
             </span>
 
-            <strong>
-              {profile?.streak ?? 0}
-            </strong>
+            <div className="stat-content">
+
+              <span className="stat-label">
+                STREAK
+              </span>
+
+              <strong>
+                {profile?.streak ?? 0}
+              </strong>
+
+            </div>
 
           </div>
 
@@ -501,7 +502,7 @@ function App() {
       )}
 
 
-      {/* PROMI-KORT */}
+      {/* PROMISAR */}
 
       <div className="promi-grid">
 

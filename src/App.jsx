@@ -444,10 +444,6 @@ function App() {
   return (
     <main className="app">
 
-      <h1 className="logo">
-        PROMI
-      </h1>
-
       {/* POÄNG + STREAK */}
 
       <div className="stats-display">

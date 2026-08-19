@@ -506,30 +506,24 @@ function App() {
 
       <div className="promi-grid">
 
-        {promisar.map((promi) => (
-
+        {promisar.slice(0, 4).map((promi) => (
+      
           <button
             key={promi.id}
             className="promi-card"
-            onClick={() =>
-              unlockPromi(promi)
-            }
+            onClick={() => unlockPromi(promi)}
           >
-
+      
             <span className="lock">
-
-              {unlockedPromis.includes(
-                promi.id
-              )
+              {unlockedPromis.includes(promi.id)
                 ? promi.Emoji
                 : "🔒"}
-
             </span>
-
+      
           </button>
-
+      
         ))}
-
+      
       </div>
 
 

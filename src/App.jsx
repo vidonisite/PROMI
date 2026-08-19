@@ -15,6 +15,8 @@ function App() {
 
   const [unlockedPromis, setUnlockedPromis] = useState([]);
 
+  const [unlockPhase, setUnlockPhase] = useState("idle");
+
   const [takenPhoto, setTakenPhoto] = useState(null);
   const [cameraOpen, setCameraOpen] = useState(false);
 
@@ -60,6 +62,7 @@ function App() {
           setCameraOpen(false);
           setUnlockingPromi(null);
           setUnlockedPromis([]);
+          setUnlockPhase("idle");
         }
       }
     );
@@ -68,6 +71,51 @@ function App() {
       subscription.unsubscribe();
     };
   }, []);
+
+  /*
+   * UPPLÅSNINGSANIMATION
+   *
+   * När låset -> emoji-animationen är klar
+   * börjar detail view åka upp.
+   */
+
+  useEffect(() => {
+    if (!unlockingPromi) {
+      return;
+    }
+
+    if (unlockPhase === "unlocking") {
+      const timer = setTimeout(() => {
+        // Öppna detail view bakom overlayen
+        setSelectedPromi(unlockingPromi);
+
+        // Börja nästa del:
+        // emoji faller + detail view åker upp
+        setUnlockPhase("transitioning");
+      }, 1350);
+
+      return () => clearTimeout(timer);
+    }
+
+    if (unlockPhase === "transitioning") {
+      const timer = setTimeout(() => {
+        const promi = unlockingPromi;
+
+        setUnlockedPromis((current) => {
+          if (current.includes(promi.id)) {
+            return current;
+          }
+
+          return [...current, promi.id];
+        });
+
+        setUnlockingPromi(null);
+        setUnlockPhase("idle");
+      }, 850);
+
+      return () => clearTimeout(timer);
+    }
+  }, [unlockingPromi, unlockPhase]);
 
   /*
    * HÄMTA DAGENS PROMISAR
@@ -113,6 +161,24 @@ function App() {
   }
 
   /*
+   * KLICKA PÅ PROMI
+   */
+
+  function unlockPromi(promi) {
+    // Redan upplåst:
+    // öppna detail view direkt.
+    if (unlockedPromis.includes(promi.id)) {
+      setSelectedPromi(promi);
+      return;
+    }
+
+    // Låst PROMI:
+    // starta upplåsningsanimationen.
+    setUnlockingPromi(promi);
+    setUnlockPhase("unlocking");
+  }
+
+  /*
    * ÖPPNA KAMERA
    */
 
@@ -138,7 +204,7 @@ function App() {
   }
 
   /*
-   * TILLBAKA TILL STARTSIDAN
+   * TILLBAKA
    */
 
   function backToHome() {
@@ -146,52 +212,6 @@ function App() {
     setTakenPhoto(null);
     setCameraOpen(false);
   }
-
-  /*
-   * STARTA UPPLÅSNINGSANIMATION
-   */
-
-  function unlockPromi(promi) {
-    // Om PROMIN redan är upplåst:
-    // öppna detail view direkt.
-    if (unlockedPromis.includes(promi.id)) {
-      setSelectedPromi(promi);
-      return;
-    }
-  
-    // Om den är låst ska vi INTE öppna detail view ännu.
-    // Först körs upplåsningsanimationen.
-    setUnlockingPromi(promi);
-  }
-
-  /*
-   * UPPLÅSNING KLAR
-   */
-
-function finishUnlock(event) {
-  if (event && event.target !== event.currentTarget) {
-    return;
-  }
-
-  if (!unlockingPromi) {
-    return;
-  }
-
-  const promi = unlockingPromi;
-
-  setUnlockedPromis((current) => {
-    if (current.includes(promi.id)) {
-      return current;
-    }
-
-    return [...current, promi.id];
-  });
-
-  // Nu när animationen är klar öppnar vi detail view.
-  setSelectedPromi(promi);
-
-  setUnlockingPromi(null);
-}
 
   /*
    * GENOMFÖR PROMI
@@ -219,10 +239,11 @@ function finishUnlock(event) {
       return;
     }
 
-    // Hämta de nya dagens PROMISAR.
+    // Hämta dagens PROMISAR igen.
     await loadPromisar();
 
-    // Uppdatera poängen direkt.
+    // Hämta profilen igen så att
+    // poängen uppdateras direkt.
     if (session) {
       await loadProfile(session.user.id);
     }
@@ -232,7 +253,7 @@ function finishUnlock(event) {
   }
 
   /*
-   * LADDA
+   * LOADING
    */
 
   if (loading) {
@@ -274,6 +295,7 @@ function finishUnlock(event) {
 
     return (
       <main className="app">
+
         <button
           className="back-button"
           onClick={backToHome}
@@ -282,19 +304,23 @@ function finishUnlock(event) {
         </button>
 
         <section className="detail-card">
+
           <img
             className="taken-photo"
             src={takenPhoto}
             alt="Din PROMI-bild"
           />
 
-          <h1>{selectedPromi.Namn}</h1>
+          <h1>
+            {selectedPromi.Namn}
+          </h1>
 
           <p className="detail-hitta">
             {selectedPromi.Hitta}
           </p>
 
           <div className="detail-info">
+
             <span>
               Svårighetsgrad{" "}
               {selectedPromi["Svårighetsgrad"]}/3
@@ -303,6 +329,7 @@ function finishUnlock(event) {
             <strong>
               +{points} poäng
             </strong>
+
           </div>
 
           {error && (
@@ -317,7 +344,9 @@ function finishUnlock(event) {
           >
             FORTSÄTT
           </button>
+
         </section>
+
       </main>
     );
   }
@@ -331,7 +360,14 @@ function finishUnlock(event) {
       selectedPromi["Svårighetsgrad"] * 10;
 
     return (
-      <main className="app">
+      <main
+        className={
+          unlockPhase === "transitioning"
+            ? "app detail-enter"
+            : "app"
+        }
+      >
+
         <button
           className="back-button"
           onClick={() =>
@@ -342,17 +378,21 @@ function finishUnlock(event) {
         </button>
 
         <section className="detail-card">
+
           <div className="detail-emoji">
             {selectedPromi.Emoji}
           </div>
 
-          <h1>{selectedPromi.Namn}</h1>
+          <h1>
+            {selectedPromi.Namn}
+          </h1>
 
           <p className="detail-hitta">
             {selectedPromi.Hitta}
           </p>
 
           <div className="detail-info">
+
             <span>
               Svårighetsgrad{" "}
               {selectedPromi["Svårighetsgrad"]}/3
@@ -361,15 +401,20 @@ function finishUnlock(event) {
             <strong>
               +{points} poäng
             </strong>
+
           </div>
 
           {selectedPromi.Bonus && (
             <div className="bonus-preview">
-              <strong>Bonus</strong>
+
+              <strong>
+                Bonus
+              </strong>
 
               <p>
                 {selectedPromi.Bonus}
               </p>
+
             </div>
           )}
 
@@ -385,7 +430,9 @@ function finishUnlock(event) {
           >
             GÖR PROMIN
           </button>
+
         </section>
+
       </main>
     );
   }
@@ -406,11 +453,13 @@ function finishUnlock(event) {
       <div className="stats-display">
 
         <div className="stat-card">
+
           <span className="stat-icon">
             ★
           </span>
 
           <div className="stat-content">
+
             <span className="stat-label">
               POÄNG
             </span>
@@ -418,16 +467,20 @@ function finishUnlock(event) {
             <strong>
               {profile?.poäng ?? 0}
             </strong>
+
           </div>
+
         </div>
 
 
         <div className="stat-card">
+
           <span className="stat-icon">
             🔥
           </span>
 
           <div className="stat-content">
+
             <span className="stat-label">
               STREAK
             </span>
@@ -435,13 +488,15 @@ function finishUnlock(event) {
             <strong>
               {profile?.streak ?? 0}
             </strong>
+
           </div>
+
         </div>
 
       </div>
 
 
-      {/* FEL */}
+      {/* FELMEDDELANDE */}
 
       {error && (
         <p className="status">
@@ -450,7 +505,7 @@ function finishUnlock(event) {
       )}
 
 
-      {/* PROMISAR */}
+      {/* PROMI-KORT */}
 
       <div className="promi-grid">
 
@@ -465,11 +520,13 @@ function finishUnlock(event) {
           >
 
             <span className="lock">
+
               {unlockedPromis.includes(
                 promi.id
               )
                 ? promi.Emoji
                 : "🔒"}
+
             </span>
 
           </button>
@@ -479,13 +536,16 @@ function finishUnlock(event) {
       </div>
 
 
-      {/* UPPLÅSNINGSANIMATION */}
+      {/* UPPLÅSNINGSOVERLAY */}
 
       {unlockingPromi && (
 
         <div
-          className="unlock-overlay"
-          onAnimationEnd={finishUnlock}
+          className={
+            unlockPhase === "transitioning"
+              ? "unlock-overlay unlock-transitioning"
+              : "unlock-overlay"
+          }
         >
 
           <div className="unlock-icon">

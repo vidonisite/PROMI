@@ -67,14 +67,13 @@ button {
   content: "";
 
   position: absolute;
-
   top: 0;
   left: 0;
   right: 0;
 
   height: env(safe-area-inset-top);
 
-  background: #86B48D;
+  background: #A8D6A9;
 
   z-index: 0;
 }

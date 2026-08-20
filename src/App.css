@@ -15,17 +15,30 @@ body,
 }
 
 html {
+  /*
+   * Viktigt för iOS black-translucent.
+   * Om statusbaren är transparent är detta
+   * färgen som ligger bakom den.
+   */
   background: #6B9071;
 }
 
 body {
   margin: 0;
-  background: #FEF8DC;
+
+  /*
+   * Body måste också vara grön.
+   * Annars kan beige synas bakom statusbaren.
+   */
+  background: #6B9071;
+
   font-family: Arial, sans-serif;
 
-  /* Gör att innehåll kan använda safe-area */
+  min-width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
+
+  overflow-x: hidden;
 }
 
 button {
@@ -47,7 +60,14 @@ button {
   margin: 0;
   padding: 0;
 
+  /*
+   * Själva appens vanliga bakgrund.
+   */
   background: #FEF8DC;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
 }
 
 
@@ -61,6 +81,11 @@ button {
   width: 100%;
   margin: 0;
 
+  /*
+   * Safe area hamnar INUTI den gröna sektionen.
+   * Det gör att det gröna fortsätter upp bakom
+   * den genomskinliga statusbaren.
+   */
   padding:
     calc(28px + env(safe-area-inset-top))
     20px
@@ -70,11 +95,6 @@ button {
 
   box-sizing: border-box;
 }
-
-
-/* =========================================
-   POÄNG + STREAK
-========================================= */
 
 .stats-display {
   width: 100%;
@@ -87,6 +107,11 @@ button {
 
   gap: 12px;
 }
+
+
+/* =========================================
+   STAT-KORT
+========================================= */
 
 .stat-card {
   display: flex;
@@ -121,6 +146,8 @@ button {
   background: rgba(255, 255, 255, 0.18);
 
   font-size: 19px;
+
+  line-height: 1;
 }
 
 .stat-content {
@@ -199,7 +226,7 @@ button {
 
 
 /* =========================================
-   PROMI KORT
+   PROMI-KORT
 ========================================= */
 
 .promi-card {
@@ -246,6 +273,7 @@ button {
   height: 100%;
 
   font-size: 58px;
+
   line-height: 1;
 
   user-select: none;
@@ -318,6 +346,7 @@ button {
   margin: 0 0 20px;
 
   font-size: 17px;
+
   line-height: 1.4;
 
   color: #444;
@@ -394,6 +423,7 @@ button {
   padding: 16px 20px;
 
   border: none;
+
   border-radius: 16px;
 
   background: #6B9071;
@@ -401,6 +431,7 @@ button {
   color: white;
 
   font-size: 16px;
+
   font-weight: 800;
 
   letter-spacing: 1px;
@@ -428,6 +459,7 @@ button {
   padding: 10px 14px;
 
   border: none;
+
   border-radius: 12px;
 
   background: transparent;
@@ -435,6 +467,7 @@ button {
   color: #244D3C;
 
   font-size: 16px;
+
   font-weight: 700;
 
   cursor: pointer;
@@ -510,11 +543,14 @@ button {
   justify-content: center;
 
   font-size: 120px;
+
   line-height: 1;
 
   transform-origin: center;
 
-  will-change: transform, opacity;
+  will-change:
+    transform,
+    opacity;
 }
 
 
@@ -531,6 +567,7 @@ button {
 }
 
 @keyframes lockOut {
+
   0% {
     opacity: 1;
     transform: scale(1);
@@ -569,6 +606,7 @@ button {
 }
 
 @keyframes emojiIn {
+
   0% {
     opacity: 0;
 
@@ -608,6 +646,7 @@ button {
 }
 
 @keyframes detailSlideUp {
+
   from {
     transform: translateY(100vh);
   }
@@ -631,6 +670,7 @@ button {
 }
 
 @keyframes emojiFall {
+
   0% {
     opacity: 1;
 
@@ -666,7 +706,8 @@ button {
 
   left: 50%;
 
-  bottom: calc(14px + env(safe-area-inset-bottom));
+  bottom:
+    calc(14px + env(safe-area-inset-bottom));
 
   transform: translateX(-50%);
 
@@ -704,6 +745,7 @@ button {
   color: white;
 
   display: flex;
+
   flex-direction: column;
 
   align-items: center;
@@ -722,6 +764,7 @@ button {
 
 .nav-item span {
   font-size: 22px;
+
   line-height: 1;
 }
 
@@ -770,45 +813,6 @@ button {
 
 
 /* =========================================
-   MOBIL
-========================================= */
-
-@media (max-width: 380px) {
-
-  .stats-display {
-    gap: 8px;
-  }
-
-  .stat-card {
-    padding: 11px;
-  }
-
-  .stat-icon {
-    width: 34px;
-    height: 34px;
-
-    font-size: 17px;
-  }
-
-  .stat-content strong {
-    font-size: 20px;
-  }
-
-  .promi-grid {
-    gap: 12px;
-
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-
-  .lock {
-    font-size: 50px;
-  }
-}
-
-
-
-/* =========================================
    PROMI FALLER NER
 ========================================= */
 
@@ -826,6 +830,7 @@ button {
 
   0% {
     opacity: 1;
+
     transform:
       translateY(0)
       rotate(0deg);
@@ -851,6 +856,7 @@ button {
 
   100% {
     opacity: 0;
+
     transform:
       translateY(110vh)
       rotate(15deg);
@@ -874,6 +880,7 @@ button {
 
   0% {
     opacity: 0;
+
     transform:
       translateX(100vw)
       rotate(8deg);
@@ -881,6 +888,7 @@ button {
 
   30% {
     opacity: 1;
+
     transform:
       translateX(55vw)
       rotate(5deg);
@@ -900,6 +908,7 @@ button {
 
   100% {
     opacity: 1;
+
     transform:
       translateX(0)
       rotate(0deg);
@@ -913,10 +922,13 @@ button {
 
 .reward-screen {
   position: fixed;
+
   inset: 0;
 
   width: 100%;
+
   min-height: 100vh;
+  min-height: 100dvh;
 
   background: #FEF8DC;
 
@@ -932,13 +944,17 @@ button {
 
 .reward-page {
   width: 100%;
+
   min-height: 100vh;
+  min-height: 100dvh;
 
   padding:
-    50px 25px
+    calc(50px + env(safe-area-inset-top))
+    25px
     calc(40px + env(safe-area-inset-bottom));
 
   display: flex;
+
   flex-direction: column;
 
   align-items: center;
@@ -956,12 +972,16 @@ button {
 
   from {
     opacity: 0;
-    transform: translateX(45px);
+
+    transform:
+      translateX(45px);
   }
 
   to {
     opacity: 1;
-    transform: translateX(0);
+
+    transform:
+      translateX(0);
   }
 }
 
@@ -987,7 +1007,9 @@ button {
 .reward-page h1 {
   margin: 5px 0 8px;
 
-  font-size: clamp(42px, 12vw, 70px);
+  font-size:
+    clamp(42px, 12vw, 70px);
+
   line-height: 0.95;
 
   font-weight: 900;
@@ -1015,7 +1037,8 @@ button {
 
   margin: 0 0 15px;
 
-  font-size: clamp(28px, 8vw, 42px);
+  font-size:
+    clamp(28px, 8vw, 42px);
 
   line-height: 1;
 
@@ -1029,7 +1052,8 @@ button {
 
   margin-top: 5px;
 
-  font-size: clamp(80px, 22vw, 140px);
+  font-size:
+    clamp(80px, 22vw, 140px);
 
   line-height: 0.85;
 
@@ -1062,7 +1086,8 @@ button {
 
   margin-top: 0;
 
-  font-size: clamp(110px, 30vw, 180px);
+  font-size:
+    clamp(110px, 30vw, 180px);
 
   line-height: 0.8;
 
@@ -1100,6 +1125,7 @@ button {
   padding: 17px 25px;
 
   border: none;
+
   border-radius: 18px;
 
   background: #6B9071;
@@ -1131,73 +1157,96 @@ button {
 }
 
 
-@supports (padding: env(safe-area-inset-top)) {
-  body::before {
-    content: "";
+/* =========================================
+   MOBIL
+========================================= */
 
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+@media (max-width: 380px) {
 
-    height: env(safe-area-inset-top);
+  .stats-display {
+    gap: 8px;
+  }
 
-    z-index: 99999;
+  .stat-card {
+    padding: 11px;
+  }
 
-    pointer-events: none;
+  .stat-icon {
+    width: 34px;
+    height: 34px;
 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    font-size: 17px;
+  }
 
-    mask: linear-gradient(
-      to bottom,
-      black,
-      black 50%,
-      rgba(0, 0, 0, 0.7) 75%,
-      rgba(0, 0, 0, 0) 100%
-    );
+  .stat-content strong {
+    font-size: 20px;
+  }
 
-    -webkit-mask: linear-gradient(
-      to bottom,
-      black,
-      black 50%,
-      rgba(0, 0, 0, 0.7) 75%,
-      rgba(0, 0, 0, 0) 100%
-    );
+  .promi-grid {
+    gap: 12px;
+
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .lock {
+    font-size: 50px;
+  }
+
+  .bottom-nav {
+    width: calc(100% - 16px);
+
+    bottom:
+      calc(8px + env(safe-area-inset-bottom));
   }
 }
 
 
+/* =========================================
+   IPHONE / SAFE AREA
+========================================= */
 
-body::before {
-  content: "";
+/*
+ * På iPhone med black-translucent ligger
+ * statusbaren ovanpå webbsidan.
+ *
+ * Vi låter därför HTML/BODY vara gröna,
+ * medan .app börjar med sin vanliga beige
+ * bakgrund under den gröna stats-sektionen.
+ */
 
-  position: fixed;
+@supports (padding-top: env(safe-area-inset-top)) {
 
-  top: 0;
-  left: 0;
-  right: 0;
+  .stats-section {
+    padding-top:
+      calc(28px + env(safe-area-inset-top));
+  }
 
-  height: env(safe-area-inset-top);
+}
 
-  z-index: 99999;
 
-  pointer-events: none;
+/* =========================================
+   FÖRHINDRA HORISONTELL SCROLL
+========================================= */
 
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+html,
+body {
+  overflow-x: hidden;
+}
 
-  mask-image: linear-gradient(
-    to bottom,
-    black 0%,
-    black 50%,
-    transparent 100%
-  );
 
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    black 0%,
-    black 50%,
-    transparent 100%
-  );
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
 }

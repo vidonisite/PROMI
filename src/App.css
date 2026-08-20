@@ -769,10 +769,6 @@ button {
   line-height: 1;
 }
 
-.nav-item.active {
-  background: rgba(255, 255, 255, 0.2);
-}
-
 .nav-item:active {
   transform: scale(0.92);
 }

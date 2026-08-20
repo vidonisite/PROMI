@@ -737,19 +737,19 @@ button {
 ========================================= */
 
 .nav-item {
-  height: 70px;
+  height: 56px;
 
   border: none;
-
   background: transparent;
-
   color: white;
 
   display: flex;
   flex-direction: column;
 
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+
+  padding-top: 7px;
 
   gap: 3px;
 

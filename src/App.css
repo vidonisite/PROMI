@@ -909,3 +909,227 @@ button {
       rotate(0deg);
   }
 }
+
+
+/* =========================================
+   REWARD SCREENS
+========================================= */
+
+.reward-screen {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  min-height: 100vh;
+
+  background: #FEF8DC;
+
+  overflow: hidden;
+
+  color: #244D3C;
+}
+
+
+/* =========================================
+   REWARD PAGE
+========================================= */
+
+.reward-page {
+  width: 100%;
+  min-height: 100vh;
+
+  padding:
+    50px 25px
+    calc(40px + env(safe-area-inset-bottom));
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  animation:
+    rewardPageIn
+    0.45s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes rewardPageIn {
+
+  from {
+    opacity: 0;
+    transform: translateX(45px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* =========================================
+   GIF
+========================================= */
+
+.reward-gif {
+  width: min(260px, 70vw);
+  height: min(260px, 70vw);
+
+  object-fit: contain;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================================
+   GRATTIS
+========================================= */
+
+.reward-page h1 {
+  margin: 5px 0 8px;
+
+  font-size: clamp(42px, 12vw, 70px);
+  line-height: 0.95;
+
+  font-weight: 900;
+
+  color: #6B9071;
+}
+
+.reward-page p {
+  margin: 0 0 30px;
+
+  font-size: 19px;
+
+  font-weight: 700;
+
+  color: #244D3C;
+}
+
+
+/* =========================================
+   POÄNG
+========================================= */
+
+.reward-page h2 {
+  max-width: 330px;
+
+  margin: 0 0 15px;
+
+  font-size: clamp(28px, 8vw, 42px);
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  color: #244D3C;
+}
+
+.reward-points {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: clamp(80px, 22vw, 140px);
+
+  line-height: 0.85;
+
+  font-weight: 900;
+
+  color: #6B9071;
+
+  letter-spacing: -5px;
+}
+
+.reward-points-label {
+  margin-top: 15px;
+
+  font-size: 18px;
+
+  font-weight: 900;
+
+  letter-spacing: 3px;
+
+  color: #244D3C;
+}
+
+
+/* =========================================
+   STREAK
+========================================= */
+
+.reward-streak {
+  display: block;
+
+  margin-top: 0;
+
+  font-size: clamp(110px, 30vw, 180px);
+
+  line-height: 0.8;
+
+  font-weight: 900;
+
+  color: #6B9071;
+
+  letter-spacing: -7px;
+}
+
+.reward-streak-label {
+  max-width: 300px;
+
+  margin-top: 20px;
+
+  font-size: 24px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+  color: #244D3C;
+}
+
+
+/* =========================================
+   REWARD BUTTON
+========================================= */
+
+.reward-button {
+  width: min(320px, 100%);
+
+  margin-top: 40px;
+
+  padding: 17px 25px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: #6B9071;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 0 #4f7055,
+    0 10px 20px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.reward-button:active {
+  transform: translateY(5px);
+
+  box-shadow:
+    0 0 0 #4f7055;
+}

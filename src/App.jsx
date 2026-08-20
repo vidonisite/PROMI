@@ -251,26 +251,62 @@ function App() {
   
     console.log("PROMI completed:", data);
   
-    // Spara informationen från Supabase
+    // Spara belöningsinformationen
     setRewardPoints(data.points_added);
     setRewardStreak(data.streak);
     setStreakIncreased(data.streak_increased);
+  
+    // Spara vilket kort som ska försvinna
+    setRemovingPromiId(completedId);
   
     // Stäng bildvyn
     setTakenPhoto(null);
     setSelectedPromi(null);
   
-    // Starta belöningssekvensen
+    // Börja belöningssekvensen
     setRewardPage("congrats");
+  }
+
+
+  function nextRewardPage() {
+
+    if (rewardPage === "congrats") {
+      setRewardPage("points");
+      return;
+    }
   
-    // FALL-animationen på kortet
-    setRemovingPromiId(completedId);
+    if (rewardPage === "points") {
   
+      if (streakIncreased) {
+        setRewardPage("streak");
+      } else {
+        finishRewards();
+      }
+  
+      return;
+    }
+  
+    if (rewardPage === "streak") {
+      finishRewards();
+    }
+  }
+
+
+  async function finishRewards() {
+    setRewardPage(null);
+  
+    const completedId = removingPromiId;
+  
+    if (!completedId) {
+      return;
+    }
+  
+    const oldIds = promisar.map(
+      (promi) => promi.id
+    );
+  
+    // Låt kortet falla först
     setTimeout(async () => {
-  
-      const oldIds = promisar.map(
-        (promi) => promi.id
-      );
   
       await loadPromisar();
   
@@ -300,36 +336,7 @@ function App() {
       }
   
     }, 900);
-  }
-
-
-
-  function nextRewardPage() {
-
-    if (rewardPage === "congrats") {
-      setRewardPage("points");
-      return;
-    }
   
-    if (rewardPage === "points") {
-  
-      if (streakIncreased) {
-        setRewardPage("streak");
-      } else {
-        finishRewards();
-      }
-  
-      return;
-    }
-  
-    if (rewardPage === "streak") {
-      finishRewards();
-    }
-  }
-
-
-  function finishRewards() {
-    setRewardPage(null);
     setRewardPoints(0);
     setRewardStreak(0);
     setStreakIncreased(false);

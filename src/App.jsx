@@ -33,6 +33,9 @@ function App() {
   const [rewardStreak, setRewardStreak] = useState(0);
   const [streakIncreased, setStreakIncreased] = useState(false);
 
+  const [dailyReward, setDailyReward] = useState(null);
+  const [dailyCompleted, setDailyCompleted] = useState(0);
+
   /*
    * STARTA APPEN
    */
@@ -48,6 +51,7 @@ function App() {
       if (session) {
         await loadPromisar();
         await loadProfile(session.user.id);
+        await loadDailyReward();
       }
 
       setLoading(false);
@@ -82,6 +86,54 @@ function App() {
     };
   }, []);
 
+
+
+
+  async function loadDailyReward() {
+    if (!session) {
+      return;
+    }
+  
+    const today = new Date().toISOString().split("T")[0];
+  
+    // Hämta dagens reward-rad
+    const {
+      data: reward,
+      error: rewardError,
+    } = await supabase
+      .from("daily_rewards")
+      .select("*")
+      .eq("user_id", session.user.id)
+      .eq("date", today)
+      .maybeSingle();
+  
+    if (rewardError) {
+      console.error(rewardError);
+      return;
+    }
+  
+    setDailyReward(reward);
+  
+    // Räkna dagens genomförda PROMISAR
+    const {
+      data: completed,
+      error: completedError,
+    } = await supabase
+      .from("completed_promis")
+      .select("id, promi_id, completed_at")
+      .eq("user_id", session.user.id)
+      .gte("completed_at", `${today}T00:00:00`)
+      .lt("completed_at", `${today}T23:59:59.999`);
+  
+    if (completedError) {
+      console.error(completedError);
+      return;
+    }
+  
+    setDailyCompleted(completed?.length ?? 0);
+  }
+
+  
   /*
    * UPPLÅSNINGSANIMATION
    */
@@ -713,6 +765,105 @@ function App() {
 
               </div>
 
+            </div>
+
+
+            <div className="daily-progress">
+
+              <div className="daily-progress-header">
+                <span>AVKLARADE PROMISAR IDAG</span>
+            
+                <strong>
+                  {dailyCompleted}/
+                  {dailyReward?.reward_10_claimed
+                    ? 10
+                    : dailyReward?.reward_5_claimed
+                    ? 10
+                    : dailyReward?.reward_3_claimed
+                    ? 5
+                    : 3}
+                </strong>
+              </div>
+            
+              <div className="progress-bar">
+            
+                <div
+                  className="progress-fill"
+                  style={{
+                    width: `${
+                      Math.min(
+                        dailyCompleted /
+                          (dailyReward?.reward_10_claimed
+                            ? 10
+                            : dailyReward?.reward_5_claimed
+                            ? 10
+                            : dailyReward?.reward_3_claimed
+                            ? 5
+                            : 3),
+                        1
+                      ) * 100
+                    }%`,
+                  }}
+                />
+            
+              </div>
+            
+              <div className="reward-goal">
+            
+                {!dailyReward?.reward_3_claimed &&
+                  dailyCompleted < 3 && (
+                    <>
+                      🎁 Gör 3 PROMISAR → <strong>+20 poäng</strong>
+                    </>
+                  )}
+            
+                {!dailyReward?.reward_3_claimed &&
+                  dailyCompleted >= 3 && (
+                    <>
+                      🎁 Belöning upplåst! <strong>+20 poäng</strong>
+                    </>
+                  )}
+            
+                {dailyReward?.reward_3_claimed &&
+                  !dailyReward?.reward_5_claimed &&
+                  dailyCompleted < 5 && (
+                    <>
+                      🎁 Gör 5 PROMISAR → <strong>nästa belöning</strong>
+                    </>
+                  )}
+            
+                {dailyReward?.reward_3_claimed &&
+                  !dailyReward?.reward_5_claimed &&
+                  dailyCompleted >= 5 && (
+                    <>
+                      🎁 Belöning upplåst!
+                    </>
+                  )}
+            
+                {dailyReward?.reward_5_claimed &&
+                  !dailyReward?.reward_10_claimed &&
+                  dailyCompleted < 10 && (
+                    <>
+                      🎁 Gör 10 PROMISAR → <strong>sista belöningen</strong>
+                    </>
+                  )}
+            
+                {dailyReward?.reward_5_claimed &&
+                  !dailyReward?.reward_10_claimed &&
+                  dailyCompleted >= 10 && (
+                    <>
+                      🎁 Sista belöningen upplåst!
+                    </>
+                  )}
+            
+                {dailyReward?.reward_10_claimed && (
+                  <>
+                    ✨ Alla dagens belöningar är avklarade!
+                  </>
+                )}
+            
+              </div>
+            
             </div>
 
           </div>

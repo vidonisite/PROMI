@@ -732,98 +732,88 @@ button {
 }
 
 
-/* =========================================
-   NAV ITEM
-========================================= */
-
-.nav-item {
-  height: 62px;
-
-  border: none;
-  background: transparent;
-
-  color: white;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding-top: 0;
-
-  border-radius: 17px;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.15s ease;
-}
-
 .nav-icon {
   position: relative;
 
   width: 27px;
   height: 27px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
 }
 
 .nav-icon svg {
   position: absolute;
 
+  top: 0;
+  left: 0;
+
   width: 27px;
   height: 27px;
 
-  transition:
-    opacity 0.18s ease,
-    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
 }
 
 .icon-outline {
   opacity: 1;
   transform: scale(1);
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
 }
 
 .icon-filled {
   opacity: 0;
   transform: scale(0.7);
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
 }
+
+
+/* =========================================
+   AKTIV IKON
+========================================= */
 
 .nav-item.active .icon-outline {
   opacity: 0;
-
   transform: scale(0.7);
 }
 
 .nav-item.active .icon-filled {
   opacity: 1;
 
-  animation: navIconBounce 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: navIconBounce 0.4s
+    cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+
+/* =========================================
+   IKON STUDSAR IN
+========================================= */
 
 @keyframes navIconBounce {
 
   0% {
-    transform: scale(0.7);
     opacity: 0;
+    transform: scale(0.7);
   }
 
-  55% {
-    transform: scale(1.18);
+  45% {
     opacity: 1;
+    transform: scale(1.18);
   }
 
-  75% {
+  70% {
     transform: scale(0.94);
   }
 
   100% {
+    opacity: 1;
     transform: scale(1);
   }
 }
-
 
 /* =========================================
    NAV PLACEHOLDER-SIDOR

@@ -28,6 +28,11 @@ function App() {
   const [removingPromiId, setRemovingPromiId] = useState(null);
   const [enteringPromiId, setEnteringPromiId] = useState(null);
 
+  const [rewardPage, setRewardPage] = useState(null);
+  const [rewardPoints, setRewardPoints] = useState(0);
+  const [rewardStreak, setRewardStreak] = useState(0);
+  const [streakIncreased, setStreakIncreased] = useState(false);
+
   /*
    * STARTA APPEN
    */
@@ -229,6 +234,7 @@ function App() {
     const completedId = selectedPromi.id;
   
     const {
+      data,
       error,
     } = await supabase.rpc(
       "complete_promi",
@@ -243,10 +249,21 @@ function App() {
       return;
     }
   
+    console.log("PROMI completed:", data);
+  
+    // Spara informationen från Supabase
+    setRewardPoints(data.points_added);
+    setRewardStreak(data.streak);
+    setStreakIncreased(data.streak_increased);
+  
+    // Stäng bildvyn
     setTakenPhoto(null);
     setSelectedPromi(null);
   
-    // FALL
+    // Starta belöningssekvensen
+    setRewardPage("congrats");
+  
+    // FALL-animationen på kortet
     setRemovingPromiId(completedId);
   
     setTimeout(async () => {
@@ -257,7 +274,6 @@ function App() {
   
       await loadPromisar();
   
-      // Hitta den nya PROMI:n
       setPromisar((current) => {
   
         const newPromi = current.find(
@@ -265,11 +281,13 @@ function App() {
         );
   
         if (newPromi) {
+  
           setEnteringPromiId(newPromi.id);
   
           setTimeout(() => {
             setEnteringPromiId(null);
-          }, 650);
+          }, 850);
+  
         }
   
         return current;
@@ -281,9 +299,44 @@ function App() {
         await loadProfile(session.user.id);
       }
   
-    }, 650);
+    }, 900);
   }
 
+
+
+  function nextRewardPage() {
+
+    if (rewardPage === "congrats") {
+      setRewardPage("points");
+      return;
+    }
+  
+    if (rewardPage === "points") {
+  
+      if (streakIncreased) {
+        setRewardPage("streak");
+      } else {
+        finishRewards();
+      }
+  
+      return;
+    }
+  
+    if (rewardPage === "streak") {
+      finishRewards();
+    }
+  }
+
+
+  function finishRewards() {
+    setRewardPage(null);
+    setRewardPoints(0);
+    setRewardStreak(0);
+    setStreakIncreased(false);
+  }
+
+
+  
   /*
    * LOADING
    */
@@ -382,6 +435,127 @@ function App() {
       </main>
     );
   }
+
+
+
+
+  
+
+
+  if (rewardPage) {
+    return (
+      <main className="reward-screen">
+  
+        {/* =========================
+            GRATTIS
+        ========================= */}
+  
+        {rewardPage === "congrats" && (
+          <section className="reward-page">
+  
+            <img
+              src="https://cdn.pixabay.com/animation/2024/07/16/16/50/16-50-52-689_512.gif"
+              className="reward-gif"
+              alt=""
+            />
+  
+            <h1>
+              GRATTIS!!!
+            </h1>
+  
+            <p>
+              Du klarade PROMIN!
+            </p>
+  
+            <button
+              className="reward-button"
+              onClick={nextRewardPage}
+            >
+              NÄSTA
+            </button>
+  
+          </section>
+        )}
+  
+  
+        {/* =========================
+            POÄNG
+        ========================= */}
+  
+        {rewardPage === "points" && (
+          <section className="reward-page">
+  
+            <img
+              src="https://cdn.pixabay.com/animation/2025/06/03/04/09/04-09-45-17_512.gif"
+              className="reward-gif"
+              alt=""
+            />
+  
+            <h2>
+              Vill du ha lite poäng?
+            </h2>
+  
+            <strong className="reward-points">
+              +{rewardPoints}
+            </strong>
+  
+            <span className="reward-points-label">
+              POÄNG
+            </span>
+  
+            <button
+              className="reward-button"
+              onClick={nextRewardPage}
+            >
+              NÄSTA
+            </button>
+  
+          </section>
+        )}
+  
+  
+        {/* =========================
+            STREAK
+        ========================= */}
+  
+        {rewardPage === "streak" && (
+          <section className="reward-page">
+  
+            <img
+              src="https://cdn.pixabay.com/animation/2025/06/26/05/26/05-26-59-506_512.gif"
+              className="reward-gif"
+              alt=""
+            />
+  
+            <strong className="reward-streak">
+              {rewardStreak}
+            </strong>
+  
+            <span className="reward-streak-label">
+              DAGARS STREAK
+            </span>
+  
+            <button
+              className="reward-button"
+              onClick={nextRewardPage}
+            >
+              KLAR
+            </button>
+  
+          </section>
+        )}
+  
+      </main>
+    );
+  }
+  
+
+
+
+
+
+
+  
 
   /*
    * DETAIL VIEW

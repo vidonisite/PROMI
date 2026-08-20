@@ -692,15 +692,15 @@ button {
   bottom: 0;
 
   width: 100%;
-  height: calc(94px + env(safe-area-inset-bottom));
+  height: calc(94px + env(safe-area-inset-bottom))
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
-  align-items: center;
+  align-items: start;
 
   padding:
-    0 6px
+    16px 6px
     env(safe-area-inset-bottom);
 
   background: #6B9071;
@@ -712,6 +712,9 @@ button {
 
   z-index: 5000;
 }
+
+
+
 
 
 /* =========================================

@@ -985,15 +985,12 @@ function App() {
             setActiveTab("bo")
           }
         >
-          <span>
-            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-home-2">
-            	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            	<path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-            	<path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-            	<path d="M10 12h4v4h-4l0 -4" />
-            </svg>
-          </span>
-          <small>Bo</small>
+          <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-home-2">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+            <path d="M10 12h4v4h-4l0 -4" />
+          </svg>
         </button>
 
 
@@ -1007,8 +1004,15 @@ function App() {
             setActiveTab("leaderboard")
           }
         >
-          <span>🏆</span>
-          <small>Leaderboard</small>
+          <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-trophy">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M8 21l8 0" />
+            <path d="M12 17l0 4" />
+            <path d="M7 4l10 0" />
+            <path d="M17 4v8a5 5 0 0 1 -10 0v-8" />
+            <path d="M3 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+            <path d="M17 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+          </svg>
         </button>
 
 
@@ -1022,8 +1026,13 @@ function App() {
             setActiveTab("feed")
           }
         >
-          <span>✨</span>
-          <small>Flödet</small>
+          <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-layout-dashboard">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
+            <path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
+            <path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
+            <path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
+          </svg>
         </button>
 
 
@@ -1037,8 +1046,13 @@ function App() {
             setActiveTab("create")
           }
         >
-          <span>＋</span>
-          <small>Skapa</small>
+          <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+            <path d="M13.5 6.5l4 4" />
+            <path d="M16 19h6" />
+            <path d="M19 16v6" />
+          </svg>
         </button>
 
       </nav>

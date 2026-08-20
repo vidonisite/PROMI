@@ -985,8 +985,6 @@ function App() {
             setActiveTab("bo")
           }
         >
-
-
           {activeTab === "bo" ? (
             // FILLED HOME SVG
             <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-home-2">
@@ -1002,11 +1000,6 @@ function App() {
               <path d="M10 12h4v4h-4l0 -4" />
             </svg>
           )}
-
-
-
-          
-          
         </button>
 
 
@@ -1020,15 +1013,25 @@ function App() {
             setActiveTab("leaderboard")
           }
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-trophy">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M8 21l8 0" />
-            <path d="M12 17l0 4" />
-            <path d="M7 4l10 0" />
-            <path d="M17 4v8a5 5 0 0 1 -10 0v-8" />
-            <path d="M3 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-            <path d="M17 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-          </svg>
+
+          {activeTab === "leaderboard" ? (
+            // FILLED HOME SVG
+            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-trophy">
+            	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            	<path d="M17 3a1 1 0 0 1 .993 .883l.007 .117v2.17a3 3 0 1 1 0 5.659v.171a6.002 6.002 0 0 1 -5 5.917v2.083h3a1 1 0 0 1 .117 1.993l-.117 .007h-8a1 1 0 0 1 -.117 -1.993l.117 -.007h3v-2.083a6.002 6.002 0 0 1 -4.996 -5.692l-.004 -.225v-.171a3 3 0 0 1 -3.996 -2.653l-.003 -.176l.005 -.176a3 3 0 0 1 3.995 -2.654l-.001 -2.17a1 1 0 0 1 1 -1h10zm-12 5a1 1 0 1 0 0 2a1 1 0 0 0 0 -2m14 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2" />
+            </svg>
+          ) : (
+            // OUTLINE HOME SVG
+            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-trophy">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8 21l8 0" />
+              <path d="M12 17l0 4" />
+              <path d="M7 4l10 0" />
+              <path d="M17 4v8a5 5 0 0 1 -10 0v-8" />
+              <path d="M3 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+              <path d="M17 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+            </svg>
+          )}
         </button>
 
 
@@ -1042,13 +1045,24 @@ function App() {
             setActiveTab("feed")
           }
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-layout-dashboard">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
-            <path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
-            <path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
-            <path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
-          </svg>
+
+
+          {activeTab === "feed" ? (
+            // FILLED HOME SVG
+            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-layout-dashboard">
+            	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            	<path d="M9 3a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2zm10 -4a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 -8a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2z" />
+            </svg>
+          ) : (
+            // OUTLINE HOME SVG
+            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-layout-dashboard">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M5 4h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
+              <path d="M5 16h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
+              <path d="M15 12h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1" />
+              <path d="M15 4h4a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1v-2a1 1 0 0 1 1 -1" />
+            </svg>
+          )}
         </button>
 
 
@@ -1062,13 +1076,21 @@ function App() {
             setActiveTab("create")
           }
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
-            <path d="M13.5 6.5l4 4" />
-            <path d="M16 19h6" />
-            <path d="M19 16v6" />
-          </svg>
+
+
+          {activeTab === "create" ? (
+            // FILLED HOME SVG
+            <svg>...</svg>
+          ) : (
+            // OUTLINE HOME SVG
+            <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-pencil-plus">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+              <path d="M13.5 6.5l4 4" />
+              <path d="M16 19h6" />
+              <path d="M19 16v6" />
+            </svg>
+          )}
         </button>
 
       </nav>

@@ -1133,3 +1133,40 @@ button {
   box-shadow:
     0 0 0 #4f7055;
 }
+
+
+@supports (padding: env(safe-area-inset-top)) {
+  body::before {
+    content: "";
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: env(safe-area-inset-top);
+
+    z-index: 99999;
+
+    pointer-events: none;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    mask: linear-gradient(
+      to bottom,
+      black,
+      black 50%,
+      rgba(0, 0, 0, 0.7) 75%,
+      rgba(0, 0, 0, 0) 100%
+    );
+
+    -webkit-mask: linear-gradient(
+      to bottom,
+      black,
+      black 50%,
+      rgba(0, 0, 0, 0.7) 75%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+}

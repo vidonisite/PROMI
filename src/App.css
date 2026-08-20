@@ -709,7 +709,7 @@ button {
   bottom: 0;
 
   width: 100%;
-  height: calc(68px + env(safe-area-inset-bottom));
+  height: calc(86px + env(safe-area-inset-bottom));
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -717,7 +717,7 @@ button {
   align-items: start;
 
   padding:
-    12px
+    6px
     6px
     env(safe-area-inset-bottom);
 
@@ -737,7 +737,7 @@ button {
 ========================================= */
 
 .nav-item {
-  height: 56px;
+  height: 70px;
 
   border: none;
 

@@ -737,7 +737,7 @@ button {
 ========================================= */
 
 .nav-item {
-  height: 50px;
+  height: 62px;
 
   border: none;
   background: transparent;
@@ -745,10 +745,10 @@ button {
   color: white;
 
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
 
-  padding-top: 7px;
+  padding-top: 0;
 
   border-radius: 17px;
 
@@ -759,11 +759,70 @@ button {
     transform 0.15s ease;
 }
 
-.nav-item svg {
-  width: 31px;
-  height: 31px;
+.nav-icon {
+  position: relative;
+
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.nav-icon svg {
+  position: absolute;
+
+  width: 27px;
+  height: 27px;
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.icon-outline {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.icon-filled {
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+.nav-item.active .icon-outline {
+  opacity: 0;
+
+  transform: scale(0.7);
+}
+
+.nav-item.active .icon-filled {
+  opacity: 1;
+
+  animation: navIconBounce 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes navIconBounce {
+
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+
+  55% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+
+  75% {
+    transform: scale(0.94);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
 
 
 /* =========================================

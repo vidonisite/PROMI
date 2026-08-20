@@ -704,36 +704,37 @@ button {
 .bottom-nav {
   position: fixed;
 
-  left: 50%;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-  bottom:
-    calc(14px + env(safe-area-inset-bottom));
-
-  transform: translateX(-50%);
-
-  width: calc(100% - 24px);
-  max-width: 500px;
-
-  height: 68px;
+  width: 100%;
+  height: calc(68px + env(safe-area-inset-bottom));
 
   display: grid;
+  grid-template-columns: repeat(4, 1fr);
 
-  grid-template-columns:
-    repeat(4, 1fr);
+  align-items: start;
 
-  align-items: center;
-
-  padding: 6px;
+  padding:
+    6px
+    6px
+    env(safe-area-inset-bottom);
 
   background: #6B9071;
 
-  border-radius: 22px;
+  border-radius: 0;
 
   box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.18);
+    0 -4px 18px rgba(0, 0, 0, 0.10);
 
   z-index: 5000;
 }
+
+
+/* =========================================
+   NAV ITEM
+========================================= */
 
 .nav-item {
   height: 56px;
@@ -745,7 +746,6 @@ button {
   color: white;
 
   display: flex;
-
   flex-direction: column;
 
   align-items: center;
@@ -764,7 +764,6 @@ button {
 
 .nav-item span {
   font-size: 22px;
-
   line-height: 1;
 }
 

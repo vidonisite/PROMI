@@ -15,21 +15,12 @@ body,
 }
 
 html {
-  /*
-   * Viktigt för iOS black-translucent.
-   * Om statusbaren är transparent är detta
-   * färgen som ligger bakom den.
-   */
   background: #6B9071;
 }
 
 body {
   margin: 0;
 
-  /*
-   * Body måste också vara grön.
-   * Annars kan beige synas bakom statusbaren.
-   */
   background: #6B9071;
 
   font-family: Arial, sans-serif;
@@ -60,9 +51,6 @@ button {
   margin: 0;
   padding: 0;
 
-  /*
-   * Själva appens vanliga bakgrund.
-   */
   background: #FEF8DC;
 
   box-sizing: border-box;
@@ -81,11 +69,6 @@ button {
   width: 100%;
   margin: 0;
 
-  /*
-   * Safe area hamnar INUTI den gröna sektionen.
-   * Det gör att det gröna fortsätter upp bakom
-   * den genomskinliga statusbaren.
-   */
   padding:
     calc(28px + env(safe-area-inset-top))
     20px
@@ -709,17 +692,22 @@ button {
   bottom: 0;
 
   width: 100%;
-  height: calc(94px + env(safe-area-inset-bottom));
+
+  height:
+    calc(94px + env(safe-area-inset-bottom));
 
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
 
-  align-items: start;
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  align-items: center;
 
   padding:
+    0
     6px
-    6px
-    env(safe-area-inset-bottom);
+    env(safe-area-inset-bottom)
+    6px;
 
   background: #6B9071;
 
@@ -729,75 +717,101 @@ button {
     0 -4px 18px rgba(0, 0, 0, 0.10);
 
   z-index: 5000;
+
+  /*
+   * Gör att iOS inte ger knapparna
+   * någon egen knappstil.
+   */
+  -webkit-appearance: none;
 }
 
 
-.nav-icon {
-  position: relative;
+/* =========================================
+   NAV ITEM
+========================================= */
 
+.nav-item {
+  width: 100%;
+  height: 62px;
+
+  border: none;
+
+  padding: 0;
+
+  background: transparent;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 17px;
+
+  cursor: pointer;
+
+  -webkit-appearance: none;
+  appearance: none;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+
+/* =========================================
+   NAV SVG
+========================================= */
+
+.nav-item svg {
   width: 27px;
   height: 27px;
 
   display: block;
-}
 
-.nav-icon svg {
-  position: absolute;
+  flex-shrink: 0;
 
-  top: 0;
-  left: 0;
+  background: transparent;
 
-  width: 27px;
-  height: 27px;
+  border: none;
+
+  color: white;
 
   transform-origin: center;
-}
-
-.icon-outline {
-  opacity: 1;
-  transform: scale(1);
 
   transition:
     opacity 0.18s ease,
-    transform 0.18s ease;
-}
-
-.icon-filled {
-  opacity: 0;
-  transform: scale(0.7);
-
-  transition:
-    opacity 0.18s ease,
-    transform 0.18s ease;
+    transform 0.25s
+      cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 
 /* =========================================
-   AKTIV IKON
+   AKTIV NAV ITEM
 ========================================= */
 
-.nav-item.active .icon-outline {
-  opacity: 0;
-  transform: scale(0.7);
+.nav-item.active {
+  background: transparent;
 }
 
-.nav-item.active .icon-filled {
-  opacity: 1;
 
-  animation: navIconBounce 0.4s
+/* =========================================
+   IKON STUDSAR NÄR SIDAN BYTS
+========================================= */
+
+.nav-item.active svg {
+  animation:
+    navIconBounce
+    0.4s
     cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-
-/* =========================================
-   IKON STUDSAR IN
-========================================= */
 
 @keyframes navIconBounce {
 
   0% {
-    opacity: 0;
-    transform: scale(0.7);
+    opacity: 0.4;
+    transform: scale(0.75);
   }
 
   45% {
@@ -815,6 +829,16 @@ button {
   }
 }
 
+
+/* =========================================
+   TRYCK PÅ NAV IKON
+========================================= */
+
+.nav-item:active {
+  transform: scale(0.92);
+}
+
+
 /* =========================================
    NAV PLACEHOLDER-SIDOR
 ========================================= */
@@ -829,6 +853,7 @@ button {
     120px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -1188,6 +1213,101 @@ button {
 
 
 /* =========================================
+   DAGENS PROMI-PROGRESS
+========================================= */
+
+.daily-progress {
+  width: 100%;
+  max-width: 500px;
+
+  margin: 18px auto 0;
+
+  padding: 0 2px;
+}
+
+.daily-progress-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+
+  color: white;
+}
+
+.daily-progress-header span {
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.2px;
+
+  opacity: 0.9;
+}
+
+.daily-progress-header strong {
+  font-size: 14px;
+
+  font-weight: 900;
+}
+
+
+/* =========================================
+   PROGRESS BAR
+========================================= */
+
+.progress-bar {
+  position: relative;
+
+  width: 100%;
+
+  height: 13px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.progress-fill {
+  height: 100%;
+
+  border-radius: 999px;
+
+  background: white;
+
+  transition:
+    width 0.7s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* =========================================
+   REWARD TEXT
+========================================= */
+
+.reward-goal {
+  margin-top: 8px;
+
+  text-align: center;
+
+  color: white;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  min-height: 16px;
+}
+
+.reward-goal strong {
+  font-weight: 900;
+}
+
+
+/* =========================================
    MOBIL
 ========================================= */
 
@@ -1223,11 +1343,26 @@ button {
     font-size: 50px;
   }
 
+  /*
+   * Navbaren ska fortfarande vara
+   * kant-till-kant även på små iPhones.
+   */
   .bottom-nav {
-    width: calc(100% - 16px);
+    width: 100%;
 
-    bottom:
-      calc(8px + env(safe-area-inset-bottom));
+    left: 0;
+    right: 0;
+
+    bottom: 0;
+  }
+
+  .nav-item {
+    height: 62px;
+  }
+
+  .nav-item svg {
+    width: 26px;
+    height: 26px;
   }
 }
 
@@ -1235,15 +1370,6 @@ button {
 /* =========================================
    IPHONE / SAFE AREA
 ========================================= */
-
-/*
- * På iPhone med black-translucent ligger
- * statusbaren ovanpå webbsidan.
- *
- * Vi låter därför HTML/BODY vara gröna,
- * medan .app börjar med sin vanliga beige
- * bakgrund under den gröna stats-sektionen.
- */
 
 @supports (padding-top: env(safe-area-inset-top)) {
 
@@ -1275,98 +1401,10 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+
     animation-iteration-count: 1 !important;
+
     transition-duration: 0.01ms !important;
   }
 
-}
-
-
-
-
-/* =========================================
-   DAGENS PROMI-PROGRESS
-========================================= */
-
-.daily-progress {
-  width: 100%;
-  max-width: 500px;
-
-  margin: 18px auto 0;
-  padding: 0 2px;
-}
-
-.daily-progress-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 8px;
-
-  color: white;
-}
-
-.daily-progress-header span {
-  font-size: 10px;
-  font-weight: 800;
-
-  letter-spacing: 1.2px;
-
-  opacity: 0.9;
-}
-
-.daily-progress-header strong {
-  font-size: 14px;
-  font-weight: 900;
-}
-
-
-/* =========================================
-   PROGRESS BAR
-========================================= */
-
-.progress-bar {
-  position: relative;
-
-  width: 100%;
-  height: 13px;
-
-  overflow: hidden;
-
-  border-radius: 999px;
-
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.progress-fill {
-  height: 100%;
-
-  border-radius: 999px;
-
-  background: white;
-
-  transition:
-    width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-
-/* =========================================
-   REWARD TEXT
-========================================= */
-
-.reward-goal {
-  margin-top: 8px;
-
-  text-align: center;
-
-  color: white;
-
-  font-size: 11px;
-  font-weight: 700;
-
-  min-height: 16px;
-}
-
-.reward-goal strong {
-  font-weight: 900;
 }

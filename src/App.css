@@ -61,18 +61,14 @@ button {
   width: 100%;
   margin: 0;
 
-  /*
-    Safe area läggs ovanpå den gröna sektionen.
-    Det gör att den gröna bakgrunden går hela vägen
-    upp mot statusfältet.
-  */
-  padding-top: calc(28px + env(safe-area-inset-top));
-
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 32px;
+  padding:
+    calc(28px + env(safe-area-inset-top))
+    20px
+    32px;
 
   background: #6B9071;
+
+  box-sizing: border-box;
 }
 
 
@@ -1169,4 +1165,39 @@ button {
       rgba(0, 0, 0, 0) 100%
     );
   }
+}
+
+
+
+body::before {
+  content: "";
+
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: env(safe-area-inset-top);
+
+  z-index: 99999;
+
+  pointer-events: none;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 50%,
+    transparent 100%
+  );
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 50%,
+    transparent 100%
+  );
 }

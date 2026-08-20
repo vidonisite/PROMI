@@ -717,7 +717,7 @@ button {
   align-items: start;
 
   padding:
-    6px
+    12px
     6px
     env(safe-area-inset-bottom);
 

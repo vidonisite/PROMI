@@ -950,7 +950,7 @@ function App() {
 
               </div>
 
-              <img
+              <img className = "pfp"
                 src = {profile?.profilbild}
               />
               

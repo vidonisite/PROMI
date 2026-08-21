@@ -686,6 +686,8 @@ button {
 
 .bottom-nav {
   position: fixed;
+   
+   border-radius: 0 0 20px 20px;
 
   left: 0;
   right: 0;

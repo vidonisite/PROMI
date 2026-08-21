@@ -277,46 +277,134 @@ function App() {
    */
 
   async function completePromi() {
-    if (!selectedPromi) {
+    if (!selectedPromi || !takenPhoto) {
       return;
     }
   
     setError("");
   
     const completedId = selectedPromi.id;
+    const userId = session.user.id;
   
-    const {
-      data,
-      error,
-    } = await supabase.rpc(
-      "complete_promi",
-      {
-        p_promi_id: completedId,
+    try {
+      // =========================================
+      // 1. KONVERTERA BILDEN TILL FIL
+      // =========================================
+  
+      const response = await fetch(takenPhoto);
+      const blob = await response.blob();
+  
+      const fileName = `${userId}/${completedId}-${Date.now()}.webp`;
+  
+      const file = new File(
+        [blob],
+        fileName,
+        {
+          type: "image/webp",
+        }
+      );
+  
+  
+      // =========================================
+      // 2. LADDA UPP BILDEN TILL SUPABASE STORAGE
+      // =========================================
+  
+      const {
+        error: uploadError,
+      } = await supabase.storage
+        .from("promi-photos")
+        .upload(fileName, file, {
+          contentType: "image/webp",
+          upsert: false,
+        });
+  
+      if (uploadError) {
+        console.error(uploadError);
+        setError(uploadError.message);
+        return;
       }
-    );
   
-    if (error) {
+  
+      // =========================================
+      // 3. HÄMTA URL TILL BILDEN
+      // =========================================
+  
+      const {
+        data: publicUrlData,
+      } = supabase.storage
+        .from("promi-photos")
+        .getPublicUrl(fileName);
+  
+      const imageUrl =
+        publicUrlData.publicUrl;
+  
+  
+      // =========================================
+      // 4. SPARA GENOMFÖRANDET
+      // =========================================
+  
+      const {
+        data,
+        error,
+      } = await supabase.rpc(
+        "complete_promi",
+        {
+          p_promi_id: completedId,
+          p_img_url: imageUrl,
+        }
+      );
+  
+      if (error) {
+        console.error(error);
+        setError(error.message);
+        return;
+      }
+  
+  
+      // =========================================
+      // 5. BELÖNING
+      // =========================================
+  
+      console.log(
+        "PROMI completed:",
+        data
+      );
+  
+      setRewardPoints(
+        data.points_added
+      );
+  
+      setRewardStreak(
+        data.streak
+      );
+  
+      setStreakIncreased(
+        data.streak_increased
+      );
+  
+  
+      // =========================================
+      // 6. TA BORT KORTET FRÅN LISTAN
+      // =========================================
+  
+      setRemovingPromiId(
+        completedId
+      );
+  
+      setTakenPhoto(null);
+      setSelectedPromi(null);
+  
+  
+      // =========================================
+      // 7. VISA REWARD
+      // =========================================
+  
+      setRewardPage("congrats");
+  
+    } catch (error) {
       console.error(error);
       setError(error.message);
-      return;
     }
-  
-    console.log("PROMI completed:", data);
-  
-    // Spara belöningsinformationen
-    setRewardPoints(data.points_added);
-    setRewardStreak(data.streak);
-    setStreakIncreased(data.streak_increased);
-  
-    // Spara vilket kort som ska försvinna
-    setRemovingPromiId(completedId);
-  
-    // Stäng bildvyn
-    setTakenPhoto(null);
-    setSelectedPromi(null);
-  
-    // Börja belöningssekvensen
-    setRewardPage("congrats");
   }
 
 

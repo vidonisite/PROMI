@@ -168,7 +168,7 @@ button {
 
 .pfp {
    width: 64px;
-   border-radius: 50%;
+   border-radius: 25%;
 
    box-shadow:
     0 4px 0 #4f7055,

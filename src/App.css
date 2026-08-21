@@ -15,13 +15,13 @@ body,
 }
 
 html {
-  background: #E8EEE9;
+  background: #6B9071;
 }
 
 body {
   margin: 0;
 
-  background: #E8EEE9;
+  background: #6B9071;
 
   font-family: Arial, sans-serif;
 
@@ -31,6 +31,7 @@ body {
 
   overflow-x: hidden;
 }
+
 
 button {
   font: inherit;

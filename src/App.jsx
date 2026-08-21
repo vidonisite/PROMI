@@ -276,6 +276,82 @@ function App() {
    * GENOMFÖR PROMI
    */
 
+
+
+
+
+
+  async function compressImageToWebP(
+    imageSource,
+    maxSize = 1000,
+    quality = 0.8
+  ) {
+    const image = new Image();
+  
+    image.src = imageSource;
+  
+    await new Promise((resolve, reject) => {
+      image.onload = resolve;
+      image.onerror = reject;
+    });
+  
+    let width = image.naturalWidth;
+    let height = image.naturalHeight;
+  
+    // Behåll proportionerna och sätt längsta sidan till max 1000 px
+    if (width > maxSize || height > maxSize) {
+      if (width > height) {
+        height = Math.round(
+          (height / width) * maxSize
+        );
+  
+        width = maxSize;
+      } else {
+        width = Math.round(
+          (width / height) * maxSize
+        );
+  
+        height = maxSize;
+      }
+    }
+  
+    const canvas = document.createElement("canvas");
+  
+    canvas.width = width;
+    canvas.height = height;
+  
+    const context = canvas.getContext("2d");
+  
+    context.drawImage(
+      image,
+      0,
+      0,
+      width,
+      height
+    );
+  
+    const blob = await new Promise((resolve) => {
+      canvas.toBlob(
+        resolve,
+        "image/webp",
+        quality
+      );
+    });
+  
+    if (!blob) {
+      throw new Error(
+        "Kunde inte konvertera bilden till WebP."
+      );
+    }
+  
+    return blob;
+  }
+
+
+
+
+  
+
   async function completePromi() {
     if (!selectedPromi || !takenPhoto) {
       return;
@@ -287,46 +363,57 @@ function App() {
     const userId = session.user.id;
   
     try {
+  
       // =========================================
-      // 1. KONVERTERA BILDEN TILL FIL
+      // 1. KOMPIMERA + KONVERTERA TILL WEBP
       // =========================================
   
-      const response = await fetch(takenPhoto);
-      const blob = await response.blob();
-  
-      const fileName = `${userId}/${completedId}-${Date.now()}.webp`;
-  
-      const file = new File(
-        [blob],
-        fileName,
-        {
-          type: "image/webp",
-        }
-      );
+      const compressedImage =
+        await compressImageToWebP(
+          takenPhoto,
+          1000,
+          0.8
+        );
   
   
       // =========================================
-      // 2. LADDA UPP BILDEN TILL SUPABASE STORAGE
+      // 2. SKAPA FILNAMN
+      // =========================================
+  
+      const fileName =
+        `${userId}/${completedId}-${Date.now()}.webp`;
+  
+  
+      // =========================================
+      // 3. LADDA UPP TILL SUPABASE STORAGE
       // =========================================
   
       const {
         error: uploadError,
       } = await supabase.storage
         .from("promi-photos")
-        .upload(fileName, file, {
-          contentType: "image/webp",
-          upsert: false,
-        });
+        .upload(
+          fileName,
+          compressedImage,
+          {
+            contentType: "image/webp",
+            upsert: false,
+          }
+        );
   
       if (uploadError) {
         console.error(uploadError);
-        setError(uploadError.message);
+  
+        setError(
+          uploadError.message
+        );
+  
         return;
       }
   
   
       // =========================================
-      // 3. HÄMTA URL TILL BILDEN
+      // 4. HÄMTA BILDENS URL
       // =========================================
   
       const {
@@ -340,7 +427,7 @@ function App() {
   
   
       // =========================================
-      // 4. SPARA GENOMFÖRANDET
+      // 5. SPARA GENOMFÖRANDET
       // =========================================
   
       const {
@@ -356,13 +443,17 @@ function App() {
   
       if (error) {
         console.error(error);
-        setError(error.message);
+  
+        setError(
+          error.message
+        );
+  
         return;
       }
   
   
       // =========================================
-      // 5. BELÖNING
+      // 6. BELÖNING
       // =========================================
   
       console.log(
@@ -384,7 +475,7 @@ function App() {
   
   
       // =========================================
-      // 6. TA BORT KORTET FRÅN LISTAN
+      // 7. TA BORT PROMIN-KORTET
       // =========================================
   
       setRemovingPromiId(
@@ -396,14 +487,20 @@ function App() {
   
   
       // =========================================
-      // 7. VISA REWARD
+      // 8. VISA REWARD
       // =========================================
   
-      setRewardPage("congrats");
+      setRewardPage(
+        "congrats"
+      );
   
     } catch (error) {
+  
       console.error(error);
-      setError(error.message);
+  
+      setError(
+        error.message
+      );
     }
   }
 

@@ -283,7 +283,7 @@ function App() {
 
   async function compressImageToWebP(
     imageSource,
-    maxSize = 1000,
+    maxSize = 200,
     quality = 0.8
   ) {
     const image = new Image();
@@ -298,7 +298,7 @@ function App() {
     let width = image.naturalWidth;
     let height = image.naturalHeight;
   
-    // Behåll proportionerna och sätt längsta sidan till max 1000 px
+    // Behåll proportionerna och sätt längsta sidan till max 200 px
     if (width > maxSize || height > maxSize) {
       if (width > height) {
         height = Math.round(
@@ -371,7 +371,7 @@ function App() {
       const compressedImage =
         await compressImageToWebP(
           takenPhoto,
-          1000,
+          200,
           0.8
         );
   

@@ -765,6 +765,12 @@ function App() {
 
               </div>
 
+              <div>
+
+                <img source = {profile.profilbild}>
+              
+              </div>
+
             </div>
 
 

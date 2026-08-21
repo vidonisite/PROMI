@@ -437,7 +437,7 @@ function App() {
         "complete_promi",
         {
           p_promi_id: completedId,
-          p_img_url: imageUrl,
+          p_image_url: imageUrl,
         }
       );
   

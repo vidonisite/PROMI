@@ -692,7 +692,7 @@ button {
   bottom: 0;
 
   width: 100%;
-  height: calc(94px + env(safe-area-inset-bottom));
+  height: calc(100px + env(safe-area-inset-bottom));
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -703,7 +703,7 @@ button {
   padding:
     0
     6px
-    env(safe-area-inset-bottom);
+    calc(env(safe-area-inset-bottom) + 10px);
 
   background: #6B9071;
 

@@ -167,8 +167,9 @@ button {
 ========================================= */
 
 .pfp {
-   width: 32px;
+   width: 50px;
    border-radius: 25%;
+   margin-top:7px;
 
    box-shadow:
     0 4px 0 #4f7055,

@@ -1,0 +1,230 @@
+/* =========================================
+   FLÖDE
+========================================= */
+
+.feed-page {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding:
+    calc(30px + env(safe-area-inset-top))
+    20px
+    calc(120px + env(safe-area-inset-bottom));
+
+  background: #FEF8DC;
+
+  color: #244D3C;
+}
+
+
+/* =========================================
+   RUBRIK
+========================================= */
+
+.feed-title {
+  margin: 0 0 20px;
+
+  text-align: center;
+
+  font-size: 26px;
+  font-weight: 900;
+
+  color: #6B9071;
+}
+
+
+/* =========================================
+   FEED-LISTA
+========================================= */
+
+.feed-list {
+  width: 100%;
+  max-width: 500px;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+
+/* =========================================
+   FEED-KORT
+========================================= */
+
+.feed-card {
+  width: 100%;
+
+  overflow: hidden;
+
+  background: white;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 5px 0 #dfe7df,
+    0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================
+   ANVÄNDARE
+========================================= */
+
+.feed-user {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 13px 15px;
+
+  color: #244D3C;
+}
+
+.feed-user strong {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+
+/* =========================================
+   PROFILBILD
+========================================= */
+
+.feed-profile-image,
+.feed-profile-placeholder {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.feed-profile-image {
+  display: block;
+
+  object-fit: cover;
+}
+
+.feed-profile-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #E8EEE9;
+
+  font-size: 18px;
+}
+
+
+/* =========================================
+   PROMI-BILD
+========================================= */
+
+.feed-image {
+  width: 100%;
+
+  aspect-ratio: 1 / 1;
+
+  display: block;
+
+  object-fit: cover;
+
+  background: #E8EEE9;
+}
+
+
+/* =========================================
+   PROMI INFORMATION
+========================================= */
+
+.feed-info {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 15px;
+}
+
+.feed-emoji {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #6B9071;
+
+  font-size: 23px;
+}
+
+.feed-info strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  color: #244D3C;
+}
+
+.feed-info p {
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #6B9071;
+}
+
+
+/* =========================================
+   LADDAR / FEL
+========================================= */
+
+.feed-page .status {
+  margin: 40px auto;
+
+  text-align: center;
+
+  color: #6B9071;
+}
+
+
+/* =========================================
+   MOBIL
+========================================= */
+
+@media (max-width: 380px) {
+
+  .feed-page {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .feed-list {
+    gap: 16px;
+  }
+
+  .feed-user {
+    padding: 11px 13px;
+  }
+
+  .feed-profile-image,
+  .feed-profile-placeholder {
+    width: 35px;
+    height: 35px;
+  }
+
+}

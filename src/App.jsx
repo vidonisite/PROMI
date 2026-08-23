@@ -3,6 +3,7 @@ import { supabase } from "./lib/supabase";
 import Auth from "./Auth";
 import Camera from "./Camera";
 import "./App.css";
+import Feed from "./Feed";
 
 function App() {
   const [session, setSession] = useState(null);
@@ -1132,15 +1133,7 @@ function App() {
           FLÖDET
       ========================= */}
 
-      {activeTab === "feed" && (
-        <div className="placeholder-page">
-
-          <h1>
-            Flödet
-          </h1>
-
-        </div>
-      )}
+      {activeTab === "feed" && <Feed />}
 
 
       {/* =========================

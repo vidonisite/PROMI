@@ -1,0 +1,210 @@
+/* =========================
+   AUTH
+========================= */
+
+.auth-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: #6b9071;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 38px 28px 30px;
+
+  background: #fef8dc;
+  border-radius: 30px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   LOGGA
+========================= */
+
+.auth-title {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: -2px;
+
+  color: #6b9071;
+}
+
+.auth-subtitle {
+  margin: 8px 0 30px;
+
+  text-align: center;
+
+  font-size: 25px;
+  font-weight: 800;
+
+  color: #354f3c;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-input {
+  width: 100%;
+
+  padding: 16px 18px;
+
+  border: 2px solid #d8dfd7;
+  border-radius: 16px;
+
+  background: white;
+
+  font-family: inherit;
+  font-size: 16px;
+  color: #354f3c;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.auth-input::placeholder {
+  color: #9aa79d;
+}
+
+.auth-input:focus {
+  border-color: #6b9071;
+
+  box-shadow: 0 0 0 4px rgba(107, 144, 113, 0.15);
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.auth-error {
+  margin: 2px 0;
+
+  padding: 12px 14px;
+
+  border-radius: 14px;
+
+  background: #f7dddd;
+  color: #a04c4c;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* =========================
+   HUVUDKNAPP
+========================= */
+
+.auth-submit {
+  width: 100%;
+
+  margin-top: 4px;
+
+  padding: 16px 20px;
+
+  border: none;
+  border-radius: 17px;
+
+  background: #6b9071;
+  color: white;
+
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.auth-submit:hover {
+  transform: translateY(-1px);
+}
+
+.auth-submit:active {
+  transform: scale(0.98);
+}
+
+.auth-submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* =========================
+   BYT LOGIN / SIGNUP
+========================= */
+
+.auth-switch {
+  width: 100%;
+
+  margin-top: 20px;
+  padding: 8px 4px;
+
+  border: none;
+  background: transparent;
+
+  color: #6b9071;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.auth-switch:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   MOBIL
+========================= */
+
+@media (max-width: 480px) {
+  .auth-page {
+    align-items: flex-start;
+
+    padding: 20px 16px;
+    padding-top: 8vh;
+  }
+
+  .auth-card {
+    padding: 34px 22px 26px;
+
+    border-radius: 27px;
+  }
+
+  .auth-title {
+    font-size: 44px;
+  }
+
+  .auth-subtitle {
+    font-size: 23px;
+    margin-bottom: 26px;
+  }
+}

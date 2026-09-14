@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "./lib/supabase";
+import "./auth.css";
 
 function Auth({ onLogin }) {
   const [mode, setMode] = useState("login");

@@ -67,75 +67,87 @@ function Auth({ onLogin }) {
   }
 
   return (
-    <main>
-      <h1>PROMI</h1>
-
-      <h2>
-        {mode === "login"
-          ? "Logga in"
-          : "Skapa konto"}
-      </h2>
-
-      <form onSubmit={handleSubmit}>
-        {mode === "signup" && (
+    <main className="auth-page">
+      <section className="auth-card">
+        <h1 className="auth-title">PROMI</h1>
+  
+        <h2 className="auth-subtitle">
+          {mode === "login"
+            ? "Logga in"
+            : "Skapa konto"}
+        </h2>
+  
+        <form className="auth-form" onSubmit={handleSubmit}>
+          {mode === "signup" && (
+            <input
+              className="auth-input"
+              type="text"
+              placeholder="Användarnamn"
+              value={username}
+              onChange={(e) =>
+                setUsername(e.target.value)
+              }
+              required
+            />
+          )}
+  
           <input
-            type="text"
-            placeholder="Användarnamn"
-            value={username}
+            className="auth-input"
+            type="email"
+            placeholder="E-post"
+            value={email}
             onChange={(e) =>
-              setUsername(e.target.value)
+              setEmail(e.target.value)
             }
             required
           />
-        )}
-
-        <input
-          type="email"
-          placeholder="E-post"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-          required
-        />
-
-        <input
-          type="password"
-          placeholder="Lösenord"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-          required
-        />
-
-        {error && <p>{error}</p>}
-
-        <button type="submit" disabled={loading}>
-          {loading
-            ? "Laddar..."
-            : mode === "login"
-            ? "Logga in"
-            : "Skapa konto"}
+  
+          <input
+            className="auth-input"
+            type="password"
+            placeholder="Lösenord"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+            required
+          />
+  
+          {error && (
+            <p className="auth-error">{error}</p>
+          )}
+  
+          <button
+            className="auth-submit"
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "Laddar..."
+              : mode === "login"
+              ? "Logga in"
+              : "Skapa konto"}
+          </button>
+        </form>
+  
+        <button
+          className="auth-switch"
+          type="button"
+          onClick={() => {
+            setError("");
+  
+            setMode(
+              mode === "login"
+                ? "signup"
+                : "login"
+            );
+          }}
+        >
+          {mode === "login"
+            ? "Har du inget konto? Skapa konto"
+            : "Har du redan ett konto? Logga in"}
         </button>
-      </form>
-
-      <button
-        type="button"
-        onClick={() => {
-          setError("");
-
-          setMode(
-            mode === "login"
-              ? "signup"
-              : "login"
-          );
-        }}
-      >
-        {mode === "login"
-          ? "Har du inget konto? Skapa konto"
-          : "Har du redan ett konto? Logga in"}
-      </button>
+      </section>
     </main>
   );
 }
